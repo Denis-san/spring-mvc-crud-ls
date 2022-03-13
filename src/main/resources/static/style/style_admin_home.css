@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+  
+ 
+body {
+    font-family: 'Quicksand', Helvetica, sans-serif;
+    margin: 0;
+}
+
+.info-card{
+    color: white;
+    transition: 0.5s;
+}
+
+.info-card h1{
+    font-size: 4rem;
+}
+
+.icon-back{
+    opacity: 0.3;
+}
+
+#card1{
+    background-color: #4297a0;
+}
+
+#card1:hover{
+    background-color: #276369;
+}
+
+#card2{
+    background-color: #e57f84;
+}
+
+#card2:hover{
+    background-color: #974f53;
+}
+
+#card3{
+    background-color: #2f5061;
+}
+#card3:hover{
+    background-color: #1f3844;
+}
