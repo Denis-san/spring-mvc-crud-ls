@@ -62,10 +62,10 @@ public class AdminController {
 
 		// Save into database
 		Book bookSend = book;
-		
+
 		System.out.println(bookSend);
-		
-		for(Author a : bookSend.getAuthors()) {
+
+		for (Author a : bookSend.getAuthors()) {
 			System.out.println(a);
 		}
 
@@ -81,24 +81,31 @@ public class AdminController {
 	@GetMapping("/listBooks")
 	public ModelAndView showListBook() {
 		ModelAndView mv = new ModelAndView("list_books");
-		
-		//get from the database
+
+		// get from the database
 		List<Book> books = new ArrayList<Book>();
-		
-		
+
 		mv.addObject("listBook", books);
 		return mv;
 	}
-	
+
 	@GetMapping("/listBooks/book/{id}")
-	public ModelAndView showBookDetails(@PathVariable(required = true, name = "id")  Integer id, Book book) {
-		
-		//get from the database by id
-		
+	public ModelAndView showBookDetails(@PathVariable(required = true, name = "id") Integer id, Book book) {
+
+		// get from the database by id
+
 		ModelAndView mv = new ModelAndView("book_details");
-		return mv ;
+		return mv;
 	}
-	
-	
-	
+
+	@GetMapping("/listAuthors")
+	public ModelAndView showListAuthor() {
+
+		ModelAndView mv = new ModelAndView("list_authors");
+		List<Author> listAuthor = Arrays.asList(new Author(1, "autor1", "Brasileiro", "bio1"), new Author(2, "autor2", "Britanico", "bio2"));
+		
+		mv.addObject("listAuthor", listAuthor);
+		return mv;
+	}
+
 }

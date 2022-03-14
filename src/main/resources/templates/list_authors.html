@@ -2,7 +2,7 @@
 <html lang="pt-br">
 
 <head
-	th:replace="/fragments/head_fragment :: head(title='Listar cadastros de livros - Library System', scriptPath='/script/script_admin_home.js', stylePath='/style/style_list_books.css')">
+	th:replace="/fragments/head_fragment :: head(title='Listar autores - Library System', scriptPath='/script/script_admin_home.js', stylePath='/style/style_list_authors.css')">
 </head>
 
 <body>
@@ -10,11 +10,11 @@
 	<div th:insert="/fragments/menu_admin :: menu"></div>
 
 
-	<div th:if="${listBook.empty}">
+	<div th:if="${listAuthor.empty}">
 
 		<div>
 			<div class="text-center mb-4 text-muted">
-				<h3>Oops! Nada por aqui ainda!</h3>
+				<h3>Oops! Nada por aqui ainda!</hh3>
 			</div>
 			<div class="d-flex justify-content-center">
 				<img src="/assets/icons/coffee.svg" alt="icon list empty" class="img-fluid w-25">
@@ -23,14 +23,15 @@
 
 	</div>
 
-	<div th:if="${!listBook.empty}">
+	<div th:if="${!listAuthor.empty}">
 
 		<div class="container mt-4">
 			<div class="input-group input-group border rounded-pill">
 				<input id="inputSearch" type="text" class="form-control border-0 rounded-pill"
 					aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
 
-				<a href="/book/search?=''" class="text-decoration-none input-group-text border-0 rounded-pill bg-white">
+				<a href="/author/search?=''"
+					class="text-decoration-none input-group-text border-0 rounded-pill bg-white">
 					<span id="inputGroup-sizing-lg"><i class="bi bi-search"></i></span>
 				</a>
 			</div>
@@ -40,22 +41,20 @@
 				<table class="table mt-4 table-striped table-hover table-bordered rounded-top">
 					<thead>
 						<tr>
-							<th scope="col">ISBN.</th>
-							<th scope="col">Título do Livro</th>
-							<th scope="col">Autor</th>
-							<th scope="col">Editora</th>
+							<th scope="col">Nome</th>
+							<th scope="col">Nacionalidade</th>
+							<th scope="col">Livros</th>
 							<th scope="col">Info</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="book : ${listBook}">
-							<td th:text="${book.isbn}">id</td>
-							<td th:text="${book.title}">Title</td>
-							<td th:each="author : ${book.authors}"><span th:text="${author.name}">authors</span></td>
-							<td th:text="${book.publishCompany}">Publish Company</td>
+						<tr th:each="author : ${listAuthor}">
+							<td th:text="${author.name}">id</td>
+							<td th:text="${author.nationality}">Title</td>
+							<td th:text="45">Publish Company</td>
 							<td class="text-center">
-								<a class="btn btn-outline-secondary" href="/admin/listBooks/book/"
-									th:href="@{/admin/listBooks/book/{id}(id = ${book.id})}">
+								<a class="btn btn-outline-secondary" href="/admin/listAuthors/author/"
+									th:href="@{/admin/listAuthors/author/{id}(id = ${author.id})}">
 									<i class="bi bi-info-circle"></i>
 								</a>
 							</td>
