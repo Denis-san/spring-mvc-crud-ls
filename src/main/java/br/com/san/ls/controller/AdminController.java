@@ -97,6 +97,7 @@ public class AdminController {
 
 		// get from the database
 		Book bookTemp = new Book();
+		bookTemp.setLanguage(new Language());
 
 		mv.addObject("book", bookTemp);
 
@@ -107,7 +108,7 @@ public class AdminController {
 	public ModelAndView showListAuthor() {
 
 		ModelAndView mv = new ModelAndView("list_authors");
-		List<Author> listAuthor = null;
+		List<Author> listAuthor = new ArrayList<Author>();
 
 		mv.addObject("listAuthor", listAuthor);
 		return mv;
@@ -125,5 +126,28 @@ public class AdminController {
 
 		return mv;
 	}
+	
+	@GetMapping("/editBook")
+	public ModelAndView showEditRegister() {
+		ModelAndView mv = new ModelAndView("edit_book");
+		
+		List<Book> books = new ArrayList<Book>();
 
+		mv.addObject("listBook", books);
+		
+		return mv;
+	}
+	
+	@GetMapping("/editBook/edit/{id}")
+	public ModelAndView showEditForm(@PathVariable(required = true, name = "id") Integer id, Book book) {
+		ModelAndView mv = new ModelAndView("edit_book_form");
+
+		// get from the database by id
+		// get from the database
+		// add this object to mv
+
+		return mv;
+	}
+	
+	
 }
