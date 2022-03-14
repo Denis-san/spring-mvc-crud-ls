@@ -1,5 +1,5 @@
 <div th:fragment="menu">
-	<nav class="navbar navbar-expand-lg navbar-light border-bottom shadow mb-5">
+	<nav class="navbar navbar-expand-lg navbar-light border-bottom shadow mb-5" id="menu">
 		<div class="container-fluid">
 			<button class="navbar-toggler " type="button" data-bs-toggle="collapse"
 				data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false"
@@ -12,7 +12,7 @@
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
 						<a class="nav-link active ms-5" aria-current="page" href="/" th:href="@{/}"><img
-								src="/assets/icons/logo-100-white.png" alt=""></a>
+								src="/assets/icons/logo_100_white.png" alt=""></a>
 					</li>
 
 				</ul>
@@ -23,7 +23,7 @@
 							<a class="nav-link" href="/" th:href="@{/admin/register}">Registrar novo Livro</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#" th:href="@{/admin/listBook}">Listar livros</a>
+							<a class="nav-link" href="#" th:href="@{/admin/listBooks}">Listar livros</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="#" th:href="@{/admin/listAuthors}">Listar autores</a>

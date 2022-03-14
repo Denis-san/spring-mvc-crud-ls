@@ -1,5 +1,5 @@
 /*-------------Menu------------------*/
-nav{
+#menu{
 	background-color: #2f5061;
 }
 
@@ -57,16 +57,6 @@ nav{
     color: white;
     text-decoration: none;
   }
-
-
-#inputSearch{
-    background-color: rgb(245, 247, 251);
-    text-indent: 4%;
-    outline: none;
-    font-size: 14px;
-    font-weight: 400;
-    color: rgb(119, 119, 119);
-}
 
 
 #loginIconNav {
