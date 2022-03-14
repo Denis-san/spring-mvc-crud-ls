@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
+
+* {
+    box-sizing: border-box;
+  }
+  
+ 
+  body {
+    font-family: 'Quicksand', Helvetica, sans-serif;
+    margin: 0;
+    position: relative;
+  }
+
+
+  .card-info{
+    border-radius: 1rem;
+  }
+
+
+.form-input input {
+  display:none;
+}
+
+.form-input img{
+  width: 100%;
+}
+
+.div-author{
+  overflow: scroll;
+  max-height: 210px;
+}
+
+.list-author-item{
+  background-color: #2f5061;
+  color: white;
+}
+

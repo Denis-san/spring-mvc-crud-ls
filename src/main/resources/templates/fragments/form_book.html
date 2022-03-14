@@ -1,0 +1,181 @@
+<div th:fragment="formBook (formAction)" class="container-xxl px-5 mt-4">
+
+	<div class="alert text-white bg-danger alert-dismissible fade show border-0 rounded-0 shadow" role="alert"
+		th:if="${#fields.hasErrors('${book.authors}')}">
+		<i class="bi bi-exclamation-diamond-fill me-2"></i><strong>Oops! </strong>Por favor, insira
+		autores para esse livro!
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+
+	<form action="" method="post" th:action="@{/admin/register}" th:object="${book}" onsubmit="return submitForm(this)" enctype="multipart/form-data">
+		<div class="row align-items-md-stretch g-5">
+
+			<div class="col-md-4">
+				<div class="row p-5 card-info shadow text-center bg-white">
+					<div class="form-input text-center">
+						<div class="preview">
+							<div class="d-flex justify-content-center">
+								<img id="file-ip-1-preview" class="img-fluid "
+									src="/assets/book-templates/template-upload-cloak.png" onchange="imageChanged()">
+							</div>
+
+						</div>
+
+						<!-- image upload -->
+						<input type="file" id="file-ip-1" accept="image/*" onchange="showPreview(event);" name="imageUpload">
+						<label for="file-ip-1" class="btn btn-sm btn-outline-primary mt-3"><i
+								class="bi bi-upload me-2"></i>Selecione a
+							imagem</label>
+
+					</div>
+
+				</div>
+
+			</div>
+
+			<div class="col-md-8 bg-white card-info shadow">
+				<div class="p-3">
+					<div class="mb-3">
+						<label class="form-label" for="inputTitle">Título do livro:</label>
+						<input type="text" name="inputTitle" class="form-control rounded-pill" th:field="*{title}"
+							th:errorclass="is-invalid">
+						<div class="invalid-feedback" th:errors="*{title}"></div>
+					</div>
+
+					<div class="row g-3">
+						<div class="col-md-4">
+
+							<label for="inputLanguage" class="form-label">Idioma:</label>
+							<input class="form-control rounded-pill" list="datalistOptions"
+								th:field="*{language.language}" th:errorclass="is-invalid" autocomplete="off">
+							<datalist id="datalistOptions">
+
+								<option th:each="language : ${allLanguages}" th:value="${language.language}"
+									th:text="${language.language}">
+							</datalist>
+
+							<div class="invalid-feedback" th:errors="*{language.language}"></div>
+
+						</div>
+						<div class="col-md-5">
+							<label for="inputPublishCompany" class="form-label">Editora:</label>
+							<input type="text" class="form-control rounded-pill" id="inputPublishCompany"
+								th:field="*{publishCompany}" th:errorclass="is-invalid">
+								<div class="invalid-feedback" th:errors="*{publishCompany}"></div>
+						</div>
+						<div class="col-md-3">
+							<label for="inputYearPublish" class="form-label">Ano de lançamento:</label>
+							<input type="text" class="form-control rounded-pill" id="inputYearPublish"
+								th:field="*{year}" th:errorclass="is-invalid">
+								<div class="invalid-feedback" th:errors="*{year}"></div>
+						</div>
+						
+						<div class="col-md-3">
+							<label for="inputEdition" class="form-label">ISBN:</label>
+							<input type="text" class="form-control rounded-pill" id="inputEdition"
+								th:field="*{isbn}" th:errorclass="is-invalid">
+								<div class="invalid-feedback" th:errors="*{isbn}"></div>
+						</div>
+
+						<div class="col-md-2">
+							<label for="inputEdition" class="form-label">Edição:</label>
+							<input type="text" class="form-control rounded-pill" id="inputEdition"
+								th:field="*{edition}" th:errorclass="is-invalid">
+								<div class="invalid-feedback" th:errors="*{edition}"></div>
+						</div>
+
+						<div class="col-md-2">
+							<label for="inputPages" class="form-label">Páginas</label>
+							<input type="text" class="form-control rounded-pill" id="inputPages"
+								th:field="*{numberPages}" th:errorclass="is-invalid">
+								<div class="invalid-feedback" th:errors="*{numberPages}"></div>
+						</div>
+
+						<div class="col-md-2">
+							<label for="inputStorage" class="form-label">Qnt. estoque:</label>
+							<input type="text" class="form-control rounded-pill" id="inputStorage"
+								th:field="*{inventoryQuantity}" th:errorclass="is-invalid">
+								<div class="invalid-feedback" th:errors="*{inventoryQuantity}"></div>
+						</div>
+
+						<div class="col-md-3">
+							<label for="inputShelfCode" class="form-label">Nº prateleira:</label>
+							<input type="text" class="form-control rounded-pill" id="inputShelfCode"
+								th:field="*{shelfCode}" th:errorclass="is-invalid">
+								<div class="invalid-feedback" th:errors="*{shelfCode}"></div>
+						</div>
+
+						<div class="mb-3">
+							<label for="description" class="form-label">Descrição:</label>
+							<textarea class="form-control" id="description" rows="4"
+								th:field="*{description}" th:errorclass="is-invalid"></textarea>
+								<div class="invalid-feedback" th:errors="*{description}"></div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="col-12 pb-4">
+					<div class="d-grid gap-2 col-6 mx-auto">
+						<button type="submit" name="addAuthor" class="btn btn-primary fw-bolder">
+							<i class="bi bi-plus-circle me-2"></i>
+							Adicionar autor</button>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="w-100 mt-0 p-4">
+				<div th:each="author,rowStat : *{authors}" id="divAuthors">
+
+					<div class="row p-3 bg-white card-info shadow mb-3">
+
+						<h5>Dados do Autor: <span th:text="${rowStat.count}"></span></h5>
+						<div class="col-md-6">
+							<label for="inputNameAuthor" class="form-label">Nome do autor:</label>
+							<input type="text" class="form-control rounded-pill" id="inputNameAuthor"
+								th:field="*{authors[__${rowStat.index}__].name}" th:errorclass="is-invalid">
+								<div class="invalid-feedback" th:errors="*{authors[__${rowStat.index}__].name}"></div>
+								
+						</div>
+
+						<div class="col-md-6">
+							<label for="inputNationality" class="form-label">Nacionalidade:</label>
+							<input type="text" class="form-control rounded-pill"
+								th:field="*{authors[__${rowStat.index}__].nationality}" th:errorclass="is-invalid" id="inputNationality">
+								<div class="invalid-feedback" th:errors="*{authors[__${rowStat.index}__].nationality}"></div>
+						</div>
+
+						<div class="mb-3">
+							<label for="iputBiography" class="form-label">Biografia:</label>
+							<textarea class="form-control" id="iputBiography" rows="4"
+								th:field="*{authors[__${rowStat.index}__].biography}" th:errorclass="is-invalid"></textarea>
+								<div class="invalid-feedback" th:errors="*{authors[__${rowStat.index}__].biography}"></div>
+						</div>
+
+						<div class="col-12 pb-4 mt-3">
+							<div class="d-grid gap-2 col-2 mx-auto">
+								<button type="submit" name="removeBook" th:value="${rowStat.index}"
+									class="btn btn-danger" onclick="btnRemoveAuthorCliked()">
+									<i class="bi bi-trash me-2"></i>
+									Remover autor</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+
+		<div class="col-12 pb-4">
+			<div class="d-grid gap-2 col-6 mx-auto">
+				<button class="btn btn-primary mt-4 fw-bolder" type="submit" name="send">
+					<i class="bi bi-save me-2"></i>
+					Salvar!</button>
+			</div>
+		</div>
+
+	</form>
+</div>
