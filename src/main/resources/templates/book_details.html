@@ -1,9 +1,83 @@
-<html>
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head
+	th:replace="/fragments/head_fragment :: head(title=${book.title} + ' - Library System', scriptPath='/script/script_admin_home.js', stylePath='/style/style_book_details.css')">
+</head>
 
 <body>
 
-<h1 th:text="${book.inventoryQuantity}"></h1>
-	
+	<div th:insert="/fragments/menu_admin :: menu"></div>
+
+	<div class="container">
+
+		<div class="card border-0 p-5 card-info shadow">
+			<div class="row g-0">
+				<div class="col-md-4 p-3">
+					<img src="/assets/book-templates/template_upload_cloak.png" class="img-fluid " alt="...">
+				</div>
+				<div class="col-md-8">
+					<div class="card-body">
+						<h5 class="card-title fs-2 fw-bolder" th:text="${book.title}">Um estudo em vermelho - Sherlock
+							Holmes
+						</h5>
+
+
+						<div class="card-text my-3" th:each="author : ${book.authors}">
+							<a href="author" th:text="${author.name}">Arthur Conan Doyle </a>
+						</div>
+
+						<div class="fw-bold">
+							<p>Ano:
+								<span class="fw-normal" th:text="${book.year}">2022</span>
+							</p>
+
+							<p>Editora:
+								<span class="fw-normal" th:text="${book.publishCompany}">Brazilian Inc.</span>
+							</p>
+
+							<p>Idioma:
+								<span class="fw-normal" th:text="${book.language.language}">Portugues-br</span>
+							</p>
+
+							<p>Número de páginas:
+								<span class="fw-normal" th:text="${book.numberPages}">198</span>
+							</p>
+							
+							<p>Edição:
+								<span class="fw-normal" th:text="${book.edition}">1º</span>
+							</p>
+							
+							<p>Estoque:
+								<span class="fw-normal" th:text="${book.inventoryQuantity}">4</span>
+								<span th:text="${book.inventoryQuantity == 1} ? 'Unidade' : 'Unidades'"></span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="accordion accordion-flush" id="accordionFlushExample">	
+				<div class=" card-info">
+					<h2 class="accordion-header card-info" id="flush-headingOne">
+						<button class="w-100 btn py-1 fw-normal  card-info" type="button" data-bs-toggle="collapse"
+							data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+							Descrição &#8964;
+						</button>
+					</h2>
+					<div id="flush-collapseOne" class="accordion-collapse collapse bg-transparent"
+						aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+						<div class="accordion-body bg-transparent">
+							<p th:text="${book.description}"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
 </body>
 
 

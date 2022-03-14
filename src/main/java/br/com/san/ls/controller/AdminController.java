@@ -91,10 +91,15 @@ public class AdminController {
 
 	@GetMapping("/listBooks/book/{id}")
 	public ModelAndView showBookDetails(@PathVariable(required = true, name = "id") Integer id, Book book) {
+		ModelAndView mv = new ModelAndView("book_details");
 
 		// get from the database by id
 
-		ModelAndView mv = new ModelAndView("book_details");
+		// get from the database
+		Book bookTemp = new Book();
+
+		mv.addObject("book", bookTemp);
+
 		return mv;
 	}
 
@@ -102,9 +107,22 @@ public class AdminController {
 	public ModelAndView showListAuthor() {
 
 		ModelAndView mv = new ModelAndView("list_authors");
-		List<Author> listAuthor = Arrays.asList(new Author(1, "autor1", "Brasileiro", "bio1"), new Author(2, "autor2", "Britanico", "bio2"));
-		
+		List<Author> listAuthor = null;
+
 		mv.addObject("listAuthor", listAuthor);
+		return mv;
+	}
+
+	@GetMapping("/listAuthors/author/{id}")
+	public ModelAndView showAuthorDetails(@PathVariable(required = true, name = "id") Integer id, Author author) {
+		ModelAndView mv = new ModelAndView("author_details");
+
+		// get from the database by id
+		// get from the database
+		Author authorTemp = new Author();
+
+		mv.addObject("author", authorTemp);
+
 		return mv;
 	}
 

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head
+	th:replace="/fragments/head_fragment :: head(title=${author.name} + ' - Library System', scriptPath='/script/script_admin_home.js', stylePath='/style/style_author_details.css')">
+</head>
+
+<body>
+
+	<div th:insert="/fragments/menu_admin :: menu"></div>
+
+	<div class="container">
+
+		<div class="card border-0 p-5 card-info shadow">
+
+			<h2><i class="bi bi-person-bounding-box me-3"></i><span th:text="${author.name}"></span></h2>
+
+
+			<div>
+
+				<h5 class="my-3">
+					<i class="bi bi-globe2 me-3"></i>
+					<span th:text="${author.nationality}"></span>
+				</h5>
+
+
+				<div>
+					<h5 class="mt-5">
+						<i class="bi bi-book me-3"></i>
+						Livros:
+					</h5>
+
+
+					<!-- th:each, get database books -->
+					<ul>
+						<li>
+							<a></a>
+						</li>
+					</ul>
+
+
+				</div>
+
+
+				<h5 class="mt-5">
+					<i class="bi bi-info-circle me-3"></i>
+					Biografia:
+				</h5>
+
+
+				<p th:text="${author.biography}"></p>
+
+
+			</div>
+
+		</div>
+
+
+	</div>
+
+</body>
+
+
+</html>
