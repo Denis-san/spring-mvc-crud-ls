@@ -90,7 +90,6 @@ public class AdminController {
 		return mv;
 	}
 	
-	
 	@GetMapping("/listBooks/book/{id}")
 	public ModelAndView showBookDetails(@PathVariable(required = true, name = "id")  Integer id, Book book) {
 		
@@ -99,5 +98,7 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView("book_details");
 		return mv ;
 	}
+	
+	
 	
 }

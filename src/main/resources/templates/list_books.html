@@ -9,62 +9,78 @@
 
 	<div th:insert="/fragments/menu_admin :: menu"></div>
 
-	<div class="container mt-4">
-		<div class="input-group input-group border rounded-pill">
-			<input id="inputSearch" type="text" class="form-control border-0 rounded-pill"
-				aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
 
-			<a href="/book/search?=''"
-				class="text-decoration-none input-group-text border-0 rounded-pill bg-white">
-				<span id="inputGroup-sizing-lg"><i class="bi bi-search"></i></span>
-			</a>
-		</div>
+	<div th:if="${listBook.empty}">
 
-		<div>
-		
-		<table class="table mt-4 table-striped table-hover table-bordered rounded-top">
-			<thead>
-				<tr>
-					<th scope="col">ISBN.</th>
-					<th scope="col">Título do Livro</th>
-					<th scope="col">Autor</th>
-					<th scope="col">Editora</th>
-					<th scope="col">Info</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="book : ${listBook}">
-					<td th:text="${book.isbn}">id</td>
-					<td th:text="${book.title}">Title</td>
-					<td th:each="author : ${book.authors}"><span th:text="${author.name}">authors</span></td>
-					<td th:text="${book.publishCompany}">Publish Company</td>
-					<td class="text-center">
-						<a class="btn btn-outline-secondary" href="/admin/listBooks/book/" th:href="@{/admin/listBooks/book/{id}(id = ${book.id})}">
-							<i class="bi bi-info-circle"></i>
-						</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		
+		<div >
+			<div class="text-center mb-4 text-muted">
+				<h3>Oops! Nada por aqui ainda!</hh3>
+			</div>
+			<div class="d-flex justify-content-center">
+				<img src="/assets/icons/coffee.svg" alt="icon list empty" class="img-fluid w-25">
+			</div>
 		</div>
 
 	</div>
 
-	<nav aria-label="Page navigation example" id="nav-page">
-		<ul class="pagination justify-content-center">
-			<li class="page-item disabled">
-				<a class="page-link">Previous</a>
-			</li>
-			<li class="page-item"><a class="page-link" href="#">1</a></li>
-			<li class="page-item"><a class="page-link" href="#">2</a></li>
-			<li class="page-item"><a class="page-link" href="#">3</a></li>
-			<li class="page-item">
-				<a class="page-link" href="#">Next</a>
-			</li>
-		</ul>
-	</nav>
+	<div th:if="${!listBook.empty}">
 
+		<div class="container mt-4">
+			<div class="input-group input-group border rounded-pill">
+				<input id="inputSearch" type="text" class="form-control border-0 rounded-pill"
+					aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+
+				<a href="/book/search?=''" class="text-decoration-none input-group-text border-0 rounded-pill bg-white">
+					<span id="inputGroup-sizing-lg"><i class="bi bi-search"></i></span>
+				</a>
+			</div>
+
+			<div>
+
+				<table class="table mt-4 table-striped table-hover table-bordered rounded-top">
+					<thead>
+						<tr>
+							<th scope="col">ISBN.</th>
+							<th scope="col">Título do Livro</th>
+							<th scope="col">Autor</th>
+							<th scope="col">Editora</th>
+							<th scope="col">Info</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="book : ${listBook}">
+							<td th:text="${book.isbn}">id</td>
+							<td th:text="${book.title}">Title</td>
+							<td th:each="author : ${book.authors}"><span th:text="${author.name}">authors</span></td>
+							<td th:text="${book.publishCompany}">Publish Company</td>
+							<td class="text-center">
+								<a class="btn btn-outline-secondary" href="/admin/listBooks/book/"
+									th:href="@{/admin/listBooks/book/{id}(id = ${book.id})}">
+									<i class="bi bi-info-circle"></i>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</div>
+
+		</div>
+
+		<nav aria-label="Page navigation example" id="nav-page">
+			<ul class="pagination justify-content-center">
+				<li class="page-item disabled">
+					<a class="page-link">Previous</a>
+				</li>
+				<li class="page-item"><a class="page-link" href="#">1</a></li>
+				<li class="page-item"><a class="page-link" href="#">2</a></li>
+				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item">
+					<a class="page-link" href="#">Next</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
 </body>
 
 </html>
