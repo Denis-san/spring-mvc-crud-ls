@@ -2,9 +2,15 @@ package br.com.san.ls.entity;
 
 import java.util.Objects;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class Language {
 	
 	private Integer id;
+	
+	@NotNull
+	@NotBlank
 	private String language;
 	
 	public Language() {

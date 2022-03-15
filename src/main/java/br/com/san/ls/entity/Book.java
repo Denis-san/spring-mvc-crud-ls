@@ -5,22 +5,55 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.ISBN;
+
+import br.com.san.ls.validation.Year;
+
 public class Book implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	@NotNull
+	@NotBlank
 	private String title;
+	@ISBN
 	private String isbn;
 	private String edition;
 	private String description;
 	private String pathCloak;
+	
+	@NotNull
+	@Year
 	private Integer year;
+	
+	@NotNull
+	@NotBlank
 	private String publishCompany;
+	
+	@NotNull
+	@Valid
 	private Language language;
+	
+	@NotNull
 	private Integer numberPages;
+	
+	@NotNull
+	@Min(1)
 	private Integer inventoryQuantity;
+	
+	@NotNull
+	@NotBlank
 	private String shelfCode;
+	
+	@NotEmpty
+	@Valid
 	private List<Author> authors = new ArrayList<Author>();
 
 	public Book() {

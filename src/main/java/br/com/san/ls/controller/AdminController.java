@@ -59,21 +59,16 @@ public class AdminController {
 	@PostMapping(value = "/register", params = { "send" })
 	public ModelAndView processBookRegister(@Valid Book book, BindingResult bdResult) {
 
-		ModelAndView mv = new ModelAndView("redirect:/admin/register");
+		ModelAndView mv = new ModelAndView("redirect:/admin/registerBook");
 
-		// Save into database
-		Book bookSend = book;
+		if (bdResult.hasErrors()) {
+			// mock
+			List<Language> listAllLanguages = Arrays.asList(new Language(1,"Inglês"), new Language(2,"Português Br"));
+			mv.addObject("allLanguages", listAllLanguages);
+			mv.setViewName("/register_book_templates/register_book");
+		} else {
 
-		System.out.println(bookSend);
-
-		for (Author a : bookSend.getAuthors()) {
-			System.out.println(a);
 		}
-
-		// mock
-		List<Language> listAllLanguages = Arrays.asList(new Language(null, "Inglês"),
-				new Language(null, "Português Br"));
-		mv.addObject("allLanguages", listAllLanguages);
 
 		return mv;
 

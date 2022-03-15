@@ -5,13 +5,20 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 public class Author implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
 	private String biography;
+	@NotNull
+	@NotBlank
 	private String nationality;
+	@NotNull
+	@NotBlank
 	private String name;
 
 	private Set<Book> books = new HashSet<Book>();
