@@ -25,7 +25,7 @@ public class AdminController {
 
 	@RequestMapping("/register")
 	public ModelAndView showRegisterForm() {
-		ModelAndView mv = new ModelAndView("register_book");
+		ModelAndView mv = new ModelAndView("/register_book_templates/register_book.html");
 		// mock
 		List<Language> listAllLanguages = Arrays.asList(new Language(null, "Inglês"),
 				new Language(null, "Português Br"));
@@ -38,7 +38,7 @@ public class AdminController {
 
 	@RequestMapping(value = "/register", params = { "addAuthor" })
 	public ModelAndView addAuthor(final Book book, BindingResult bdResult) {
-		ModelAndView mv = new ModelAndView("register_book");
+		ModelAndView mv = new ModelAndView("/register_book_templates/register_book.html");
 
 		book.getAuthors().add(new Author());
 
@@ -47,7 +47,7 @@ public class AdminController {
 
 	@RequestMapping(value = "/register", params = { "removeBook" })
 	public ModelAndView removeRow(final Book book, final BindingResult bindingResult, final HttpServletRequest req) {
-		ModelAndView mv = new ModelAndView("register_book");
+		ModelAndView mv = new ModelAndView("/register_book_templates/register_book.html");
 
 		final Integer rowId = Integer.valueOf(req.getParameter("removeBook"));
 		book.getAuthors().remove(rowId.intValue());
@@ -80,7 +80,7 @@ public class AdminController {
 
 	@GetMapping("/listBooks")
 	public ModelAndView showListBook() {
-		ModelAndView mv = new ModelAndView("list_books");
+		ModelAndView mv = new ModelAndView("/list_book_templates/list_books");
 
 		// get from the database
 		List<Book> books = new ArrayList<Book>();
@@ -91,7 +91,7 @@ public class AdminController {
 
 	@GetMapping("/listBooks/book/{id}")
 	public ModelAndView showBookDetails(@PathVariable(required = true, name = "id") Integer id, Book book) {
-		ModelAndView mv = new ModelAndView("book_details");
+		ModelAndView mv = new ModelAndView("/list_book_templates/book_details");
 
 		// get from the database by id
 
@@ -107,7 +107,7 @@ public class AdminController {
 	@GetMapping("/listAuthors")
 	public ModelAndView showListAuthor() {
 
-		ModelAndView mv = new ModelAndView("list_authors");
+		ModelAndView mv = new ModelAndView("/author_templates/list_authors");
 		List<Author> listAuthor = new ArrayList<Author>();
 
 		mv.addObject("listAuthor", listAuthor);
@@ -116,7 +116,7 @@ public class AdminController {
 
 	@GetMapping("/listAuthors/author/{id}")
 	public ModelAndView showAuthorDetails(@PathVariable(required = true, name = "id") Integer id, Author author) {
-		ModelAndView mv = new ModelAndView("author_details");
+		ModelAndView mv = new ModelAndView("/author_templates/author_details");
 
 		// get from the database by id
 		// get from the database
@@ -129,7 +129,7 @@ public class AdminController {
 	
 	@GetMapping("/editBook")
 	public ModelAndView showEditRegister() {
-		ModelAndView mv = new ModelAndView("edit_book");
+		ModelAndView mv = new ModelAndView("/edit_book_templates/edit_book");
 		
 		List<Book> books = new ArrayList<Book>();
 
@@ -140,7 +140,7 @@ public class AdminController {
 	
 	@GetMapping("/editBook/edit/{id}")
 	public ModelAndView showEditForm(@PathVariable(required = true, name = "id") Integer id, Book book) {
-		ModelAndView mv = new ModelAndView("edit_book_form");
+		ModelAndView mv = new ModelAndView("/edit_book_templates/edit_book_form");
 
 		// get from the database by id
 		// get from the database
