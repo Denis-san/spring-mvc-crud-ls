@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.com.san.ls.entity.Author;
@@ -126,18 +127,18 @@ public class AdminController {
 
 		return mv;
 	}
-	
+
 	@GetMapping("/editBook")
 	public ModelAndView showEditRegister() {
 		ModelAndView mv = new ModelAndView("/edit_book_templates/edit_book");
-		
+
 		List<Book> books = new ArrayList<Book>();
 
 		mv.addObject("listBook", books);
-		
+
 		return mv;
 	}
-	
+
 	@GetMapping("/editBook/edit/{id}")
 	public ModelAndView showEditForm(@PathVariable(required = true, name = "id") Integer id, Book book) {
 		ModelAndView mv = new ModelAndView("/edit_book_templates/edit_book_form");
@@ -148,6 +149,27 @@ public class AdminController {
 
 		return mv;
 	}
-	
-	
+
+	@GetMapping("/deleteBook")
+	public ModelAndView showDeleteRegister() {
+		ModelAndView mv = new ModelAndView("/delete_book_templates/delete_book");
+
+		// get from the database
+
+		return mv;
+	}
+
+	@GetMapping("/delete/book")
+	public ModelAndView processDelete(@RequestParam(name = "id", required = true) Integer id) {
+		ModelAndView mv = new ModelAndView("/delete_book_templates/delete_book");
+
+		// get from the database
+
+		System.out.println(id);
+
+		// if else
+		mv.addObject("deleted", true);
+		return mv;
+	}
+
 }

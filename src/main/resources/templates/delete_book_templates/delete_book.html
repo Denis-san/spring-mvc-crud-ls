@@ -1,4 +1,22 @@
-<div th:fragment="tableBook (btType, btIcon, pathAction)" class="container-xxl px-5 mt-4">
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head th:replace="/fragments/head_fragment.html :: head(title='Remover livros', scriptPath='/script/script_book_delete.js', stylePath='/style/style_book_edit.css')">
+</head>
+
+<body>
+
+	<div th:insert="/fragments/menu_admin :: menu"></div>
+
+	<div class="container-xxl px-5 mt-4">
+	
+	
+	<div class="alert text-white bg-success alert-dismissible fade show border-0 rounded-0 shadow" role="alert"
+		th:if="${deleted}">
+		<i class="bi bi-check-circle-fill me-2"></i><strong>Ok! </strong>Livro deletado com sucesso!
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+	
 	<div>
 
 		<div class="container mb-4">
@@ -16,7 +34,7 @@
 		</div>
 
 
-		<div th:if="${listBook.empty}">
+		<div th:if="${listBook == null} or ${listBook.empty}">
 
 			<div>
 				<div class="text-center mb-4 text-muted">
@@ -29,9 +47,9 @@
 
 		</div>
 
-		<div th:if="${!listBook.empty}">
+		<div th:if="${listBook != null}">
 
-			<div class="container mt-4">
+			<div class="container mt-4" th:if="${!listBook.empty}">
 				<div>
 
 					<table class="table mt-4 table-striped table-hover table-bordered rounded-top">
@@ -52,9 +70,9 @@
 								</td>
 								<td th:text="${book.publishCompany}">Publish Company</td>
 								<td class="text-center">
-									<a th:class="${btType}" href="/admin/listBooks/book/"
-										th:href="@{${pathAction} + ${book.id}}">
-										<i th:class="${btIcon}"></i>
+									<a class="btn btn-outline-danger" href="/admin/delete/book/"
+										th:href="@{/admin/delete/book(id=${book.id})}" onclick="return confirmDelete()">
+										<i class="bi bi-trash"></i>
 									</a>
 								</td>
 							</tr>
@@ -83,3 +101,7 @@
 	</div>
 
 </div>
+
+</body>
+
+</html>
