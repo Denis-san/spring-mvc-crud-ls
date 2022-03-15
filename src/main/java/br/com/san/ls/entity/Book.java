@@ -5,6 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -15,11 +23,16 @@ import org.hibernate.validator.constraints.ISBN;
 
 import br.com.san.ls.validation.Year;
 
+@Entity
+@Table(name = "book_tb")
 public class Book implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
 	@NotNull
 	@NotBlank
 	private String title;
@@ -27,6 +40,7 @@ public class Book implements Serializable {
 	private String isbn;
 	private String edition;
 	private String description;
+	@Column(name = "path_cloak")
 	private String pathCloak;
 	
 	@NotNull
@@ -35,25 +49,31 @@ public class Book implements Serializable {
 	
 	@NotNull
 	@NotBlank
+	@Column(name = "publish_company")
 	private String publishCompany;
 	
 	@NotNull
 	@Valid
+	@OneToOne
 	private Language language;
 	
 	@NotNull
+	@Column(name = "number_pages")
 	private Integer numberPages;
 	
 	@NotNull
 	@Min(1)
+	@Column(name = "inventory_quantity")
 	private Integer inventoryQuantity;
 	
 	@NotNull
 	@NotBlank
+	@Column(name = "shelf_code")
 	private String shelfCode;
 	
 	@NotEmpty
 	@Valid
+	@ManyToMany(mappedBy = "books")
 	private List<Author> authors = new ArrayList<Author>();
 
 	public Book() {

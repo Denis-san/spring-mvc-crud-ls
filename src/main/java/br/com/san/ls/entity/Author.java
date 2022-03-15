@@ -5,13 +5,25 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+@Entity
+@Table(name = "author_tb")
 public class Author implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String biography;
 	@NotNull
@@ -21,6 +33,9 @@ public class Author implements Serializable {
 	@NotBlank
 	private String name;
 
+	@ManyToMany
+	@JoinTable(name = "book_author", joinColumns = { @JoinColumn(name = "book_id") }, 
+			   inverseJoinColumns = {@JoinColumn(name = "author_id") })
 	private Set<Book> books = new HashSet<Book>();
 
 	public Author() {
