@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +16,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.san.ls.entity.Author;
 import br.com.san.ls.entity.Book;
 import br.com.san.ls.entity.Language;
+import br.com.san.ls.service.BookService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	
+	
+	@Autowired
+	private BookService bookService;
 
 	@RequestMapping("/register")
 	public ModelAndView showRegisterForm() {
@@ -57,17 +64,20 @@ public class AdminController {
 	}
 
 	@PostMapping(value = "/register", params = { "send" })
-	public ModelAndView processBookRegister(@Valid Book book, BindingResult bdResult) {
+	public ModelAndView processBookRegister(@Valid Book book, BindingResult bdResult, RedirectAttributes attributes) {
 
-		ModelAndView mv = new ModelAndView("redirect:/admin/registerBook");
+		ModelAndView mv = new ModelAndView("redirect:/admin/register");
 
+		Book bookTemp = book;
+		bookTemp.setLanguage(new Language(null, book.getLanguage().getLanguage()));
+		
 		if (bdResult.hasErrors()) {
-			// mock
 			List<Language> listAllLanguages = Arrays.asList(new Language(1,"Inglês"), new Language(2,"Português Br"));
 			mv.addObject("allLanguages", listAllLanguages);
 			mv.setViewName("/register_book_templates/register_book");
 		} else {
-
+			bookService.saveNewBook(bookTemp);
+			attributes.addFlashAttribute("saved", true);
 		}
 
 		return mv;
@@ -79,7 +89,7 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView("/list_book_templates/list_books");
 
 		// get from the database
-		List<Book> books = new ArrayList<Book>();
+		List<Book> books = bookService.getAllBooks();
 
 		mv.addObject("listBook", books);
 		return mv;

@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -32,7 +36,7 @@ public class Book implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	@NotNull
 	@NotBlank
 	private String title;
@@ -42,38 +46,40 @@ public class Book implements Serializable {
 	private String description;
 	@Column(name = "path_cloak")
 	private String pathCloak;
-	
+
 	@NotNull
 	@Year
 	private Integer year;
-	
+
 	@NotNull
 	@NotBlank
 	@Column(name = "publish_company")
 	private String publishCompany;
-	
+
 	@NotNull
 	@Valid
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Language language;
-	
+
 	@NotNull
 	@Column(name = "number_pages")
 	private Integer numberPages;
-	
+
 	@NotNull
 	@Min(1)
 	@Column(name = "inventory_quantity")
 	private Integer inventoryQuantity;
-	
+
 	@NotNull
 	@NotBlank
 	@Column(name = "shelf_code")
 	private String shelfCode;
-	
+
 	@NotEmpty
 	@Valid
-	@ManyToMany(mappedBy = "books")
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name = "book_author", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "author_id") })
 	private List<Author> authors = new ArrayList<Author>();
 
 	public Book() {
@@ -81,7 +87,8 @@ public class Book implements Serializable {
 	}
 
 	public Book(Integer id, String title, String isbn, String edition, String description, String pathCloak,
-			Integer year, String publishCompany, Language language, Integer numberPages, Integer inventoryQuantity, String shelfCode) {
+			Integer year, String publishCompany, Language language, Integer numberPages, Integer inventoryQuantity,
+			String shelfCode) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -184,11 +191,11 @@ public class Book implements Serializable {
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
-	
+
 	public String getShelfCode() {
 		return shelfCode;
 	}
-	
+
 	public void setShelfCode(String shelfCode) {
 		this.shelfCode = shelfCode;
 	}
@@ -219,10 +226,8 @@ public class Book implements Serializable {
 	public String toString() {
 		return "Book [id=" + id + ", title=" + title + ", isbn=" + isbn + ", edition=" + edition + ", description="
 				+ description + ", pathCloak=" + pathCloak + ", year=" + year + ", publishCompany=" + publishCompany
-				+ ", language=" + language.getLanguage() + ", numberPages=" + numberPages + ", inventoryQuantity=" + inventoryQuantity
-				+ ", shelfCode=" + shelfCode + "]";
+				+ ", language=" + language.getLanguage() + ", numberPages=" + numberPages + ", inventoryQuantity="
+				+ inventoryQuantity + ", shelfCode=" + shelfCode + "]";
 	}
-	
-	
 
 }

@@ -48,7 +48,10 @@
 							<tr th:each="book : ${listBook}">
 								<td th:text="${book.isbn}">id</td>
 								<td th:text="${book.title}">Title</td>
-								<td th:each="author : ${book.authors}"><span th:text="${author.name}">authors</span>
+								<td>
+									<div th:each="author : ${book.authors}" class="text-truncate">
+										<a href="" th:text="${author.name}" th:href="@{/admin/listAuthors/author/{id}(id = ${author.id})}" >authors</a>
+									</div>
 								</td>
 								<td th:text="${book.publishCompany}">Publish Company</td>
 								<td class="text-center">

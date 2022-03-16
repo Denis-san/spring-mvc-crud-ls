@@ -6,6 +6,12 @@
 		autores para esse livro!
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	</div>
+	
+	<div class="alert text-white bg-success alert-dismissible fade show border-0 rounded-0 shadow" role="alert"
+		th:if="${saved == true}">
+		<i class="bi bi-check-circle-fill me-2"></i><strong>Sucesso! </strong>Livro Registrado com sucesso!
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
 
 	<form action="" method="post" th:action="@{/admin/register}" th:object="${book}" onsubmit="return submitForm(this)" enctype="multipart/form-data">
 		<div class="row align-items-md-stretch g-5">

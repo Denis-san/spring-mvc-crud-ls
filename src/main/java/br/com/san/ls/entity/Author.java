@@ -5,12 +5,11 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -33,9 +32,7 @@ public class Author implements Serializable {
 	@NotBlank
 	private String name;
 
-	@ManyToMany
-	@JoinTable(name = "book_author", joinColumns = { @JoinColumn(name = "book_id") }, 
-			   inverseJoinColumns = {@JoinColumn(name = "author_id") })
+	@ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL)
 	private Set<Book> books = new HashSet<Book>();
 
 	public Author() {
