@@ -13,9 +13,10 @@ public class BookServiceImpl implements BookService {
 
 	@Autowired
 	private BookDao bookDao;
-
+	
 	@Override
 	public void saveNewBook(Book book) {
+		
 		bookDao.saveBook(book);
 
 	}

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +33,7 @@ public class Author implements Serializable {
 	@NotBlank
 	private String name;
 
-	@ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Book> books = new HashSet<Book>();
 
 	public Author() {

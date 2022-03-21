@@ -18,6 +18,17 @@
   }
 
 
+  .wrapper {
+    overflow: auto;
+    height: 90vh;
+    width: 100%;
+  }
+
+  .content {
+    overflow-y: auto;
+  }
+
+
 .form-input input {
   display:none;
 }

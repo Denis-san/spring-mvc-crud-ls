@@ -1,0 +1,64 @@
+<div th:fragment="searchAuthorModal">
+
+	<div class="modal fade" id="modalSearch" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="modalSearchLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalSearchLabel">Busca por: <span th:text="${searchAuthorObj}"></span>
+					</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+
+					<div class="container mt-4">
+						<div>
+
+							<table class="table mt-4 table-striped table-hover table-bordered rounded-top">
+								<thead>
+									<tr>
+										<th scope="col">Nome</th>
+										<th scope="col">Nacionalidade</th>
+										<th scope="col">Add</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="author : ${resultsAuthors}">
+										<td th:text="${author.name}">name</td>
+										<td th:text="${author.nationality}">Title</td>
+
+										<td class="text-center">
+										<button type="submit" th:name="addAuthor" th:value="${author.id}">check-in</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+
+					</div>
+
+					<nav aria-label="Page navigation example" id="nav-page">
+						<ul class="pagination justify-content-center">
+							<li class="page-item disabled">
+								<a class="page-link">Previous</a>
+							</li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item">
+								<a class="page-link" href="#">Next</a>
+							</li>
+						</ul>
+					</nav>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</div>

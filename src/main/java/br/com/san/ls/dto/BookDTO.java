@@ -1,71 +1,73 @@
-package br.com.san.ls.entity;
+package br.com.san.ls.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "book_tb")
-public class Book implements Serializable {
+import org.hibernate.validator.constraints.ISBN;
+
+import br.com.san.ls.entity.Author;
+import br.com.san.ls.entity.Book;
+import br.com.san.ls.entity.Language;
+import br.com.san.ls.validation.Year;
+
+public class BookDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer authorId;
 
+	@NotNull
+	@NotBlank
 	private String title;
+	@ISBN
 	private String isbn;
 	private String edition;
 	private String description;
-	@Column(name = "path_cloak")
 	private String pathCloak;
 
+	@NotNull
+	@Year
 	private Integer year;
-	@Column(name = "publish_company")
+
+	@NotNull
+	@NotBlank
 	private String publishCompany;
 
-	@ManyToOne(cascade = {  CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
-	@JoinColumn(name = "language_id")
+	@Valid
 	private Language language;
 
-	@Column(name = "number_pages")
+	@NotNull
 	private Integer numberPages;
 
-	@Column(name = "inventory_quantity")
+	@NotNull
+	@Min(1)
 	private Integer inventoryQuantity;
 
-	@Column(name = "shelf_code")
+	@NotNull
+	@NotBlank
 	private String shelfCode;
 
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinTable(name = "book_author", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "author_id") })
+	@NotEmpty
+	@Valid
 	private List<Author> authors = new ArrayList<Author>();
 
-	public Book() {
+	public BookDTO() {
 
 	}
 
-	public Book(Integer id, String title, String isbn, String edition, String description, String pathCloak,
+	public BookDTO(Integer authorId, String title, String isbn, String edition, String description, String pathCloak,
 			Integer year, String publishCompany, Language language, Integer numberPages, Integer inventoryQuantity,
 			String shelfCode) {
 		super();
-		this.id = id;
+		this.authorId = authorId;
 		this.title = title;
 		this.isbn = isbn;
 		this.edition = edition;
@@ -155,8 +157,12 @@ public class Book implements Serializable {
 		this.inventoryQuantity = inventoryQuantity;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(Integer authorId) {
+		this.authorId = authorId;
 	}
 
 	public String getIsbn() {
@@ -175,9 +181,58 @@ public class Book implements Serializable {
 		this.shelfCode = shelfCode;
 	}
 
+	public Book toBook() {
+		Book book = new Book();
+		book.setTitle(this.title);
+		book.setIsbn(this.isbn);
+		book.setEdition(this.edition);
+		book.setDescription(this.description);
+		book.setPathCloak(this.pathCloak);
+		book.setYear(this.year);
+		book.setPublishCompany(this.publishCompany);
+		book.setLanguage(this.language);
+		book.setNumberPages(this.numberPages);
+		book.setInventoryQuantity(this.inventoryQuantity);
+		book.setShelfCode(this.shelfCode);
+
+		return book;
+	}
+
+	public Book toBook(Book book) {
+		book.setTitle(this.title);
+		book.setIsbn(this.isbn);
+		book.setEdition(this.edition);
+		book.setDescription(this.description);
+		book.setPathCloak(this.pathCloak);
+		book.setYear(this.year);
+		book.setPublishCompany(this.publishCompany);
+		book.setLanguage(this.language);
+		book.setNumberPages(this.numberPages);
+		book.setInventoryQuantity(this.inventoryQuantity);
+		book.setShelfCode(this.shelfCode);
+
+		return book;
+	}
+
+	public Book fromBook(Book book) {
+		this.title = book.getTitle();
+		this.isbn = book.getIsbn();
+		this.edition = book.getEdition();
+		this.description = book.getDescription();
+		this.pathCloak = book.getPathCloak();
+		this.year = book.getYear();
+		this.publishCompany = book.getPublishCompany();
+		this.language = book.getLanguage();
+		this.numberPages = book.getNumberPages();
+		this.inventoryQuantity = book.getInventoryQuantity();
+		this.shelfCode = book.getShelfCode();
+
+		return book;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(edition, id, language, numberPages, pathCloak, publishCompany, title, year,
+		return Objects.hash(edition, authorId, language, numberPages, pathCloak, publishCompany, title, year,
 				inventoryQuantity, shelfCode);
 	}
 
@@ -189,8 +244,8 @@ public class Book implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Book other = (Book) obj;
-		return Objects.equals(edition, other.edition) && Objects.equals(id, other.id)
+		BookDTO other = (BookDTO) obj;
+		return Objects.equals(edition, other.edition) && Objects.equals(authorId, other.authorId)
 				&& Objects.equals(language, other.language) && Objects.equals(numberPages, other.numberPages)
 				&& Objects.equals(pathCloak, other.pathCloak) && Objects.equals(publishCompany, other.publishCompany)
 				&& Objects.equals(title, other.title) && Objects.equals(year, other.year)
@@ -199,10 +254,10 @@ public class Book implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", title=" + title + ", isbn=" + isbn + ", edition=" + edition + ", description="
-				+ description + ", pathCloak=" + pathCloak + ", year=" + year + ", publishCompany=" + publishCompany
-				+ ", language=" + language + ", numberPages=" + numberPages + ", inventoryQuantity="
-				+ inventoryQuantity + ", shelfCode=" + shelfCode + "]";
+		return "Book [title=" + title + ", isbn=" + isbn + ", edition=" + edition + ", description=" + description
+				+ ", pathCloak=" + pathCloak + ", year=" + year + ", publishCompany=" + publishCompany + ", language="
+				+ language + ", numberPages=" + numberPages + ", inventoryQuantity=" + inventoryQuantity
+				+ ", shelfCode=" + shelfCode + "]";
 	}
 
 }

@@ -1,7 +1,6 @@
 package br.com.san.ls.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,65 +17,101 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import br.com.san.ls.dto.BookDTO;
 import br.com.san.ls.entity.Author;
 import br.com.san.ls.entity.Book;
 import br.com.san.ls.entity.Language;
+import br.com.san.ls.service.AuthorService;
 import br.com.san.ls.service.BookService;
+import br.com.san.ls.service.LanguageService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	
-	
+
+	@Autowired
+	private AuthorService authorService;
+
+	@Autowired
+	private LanguageService langService;
+
 	@Autowired
 	private BookService bookService;
 
 	@RequestMapping("/register")
 	public ModelAndView showRegisterForm() {
 		ModelAndView mv = new ModelAndView("/register_book_templates/register_book.html");
-		// mock
-		List<Language> listAllLanguages = Arrays.asList(new Language(null, "Inglês"),
-				new Language(null, "Português Br"));
+		List<Language> listAllLanguages = langService.getAllLanguages();
 
 		// CHANGE TO BOOKDTO
-		mv.addObject("book", new Book());
+		mv.addObject("bookDTO", new BookDTO());
 		mv.addObject("allLanguages", listAllLanguages);
 		return mv;
 	}
 
-	@RequestMapping(value = "/register", params = { "addAuthor" })
-	public ModelAndView addAuthor(final Book book, BindingResult bdResult) {
+	@PostMapping(value = "/register", params = { "searchAuthor" })
+	public ModelAndView searchAuthorToAdd(final BookDTO bookDTO, BindingResult bdResult, @RequestParam String search) {
 		ModelAndView mv = new ModelAndView("/register_book_templates/register_book.html");
 
-		book.getAuthors().add(new Author());
+		List<Author> resultAuthors = authorService.getAllAuthors();
+
+		if (!search.isBlank()) {
+			mv.addObject("searchAuthorObj", search);
+			mv.addObject("resultsAuthors", resultAuthors);
+		}
+
+		return mv;
+	}
+
+	@RequestMapping(value = "/register", params = { "addAuthor" })
+	public ModelAndView addAuthor(final BookDTO bookDTO, BindingResult bdResult, final HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView("/register_book_templates/register_book.html");
+
+		String authorId = request.getParameter("addAuthor");
+
+		if(authorId.isBlank()) {
+			bookDTO.getAuthors().add(new Author());
+		}else {
+			try {
+				Integer theAuthord = Integer.valueOf(authorId);
+				bookDTO.getAuthors().add(authorService.getAuthorById(theAuthord));
+			} catch (NumberFormatException err) {
+				mv.addObject("errorAuthorId", err);
+			}
+		}
+		
+		List<Language> listAllLanguages = langService.getAllLanguages();
+		mv.addObject("allLanguages", listAllLanguages);
 
 		return mv;
 	}
 
 	@RequestMapping(value = "/register", params = { "removeBook" })
-	public ModelAndView removeRow(final Book book, final BindingResult bindingResult, final HttpServletRequest req) {
+	public ModelAndView removeRow(final BookDTO bookDTO, final BindingResult bindingResult,
+			final HttpServletRequest req) {
 		ModelAndView mv = new ModelAndView("/register_book_templates/register_book.html");
 
 		final Integer rowId = Integer.valueOf(req.getParameter("removeBook"));
-		book.getAuthors().remove(rowId.intValue());
+		bookDTO.getAuthors().remove(rowId.intValue());
 
+		List<Language> listAllLanguages = langService.getAllLanguages();
+		mv.addObject("allLanguages", listAllLanguages);
 		return mv;
 	}
 
 	@PostMapping(value = "/register", params = { "send" })
-	public ModelAndView processBookRegister(@Valid Book book, BindingResult bdResult, RedirectAttributes attributes) {
+	public ModelAndView processBookRegister(@Valid BookDTO bookDTO, BindingResult bdResult,
+			RedirectAttributes attributes) {
 
 		ModelAndView mv = new ModelAndView("redirect:/admin/register");
 
-		Book bookTemp = book;
-		bookTemp.setLanguage(new Language(null, book.getLanguage().getLanguage()));
-		
 		if (bdResult.hasErrors()) {
-			List<Language> listAllLanguages = Arrays.asList(new Language(1,"Inglês"), new Language(2,"Português Br"));
+			List<Language> listAllLanguages = langService.getAllLanguages();
 			mv.addObject("allLanguages", listAllLanguages);
 			mv.setViewName("/register_book_templates/register_book");
 		} else {
-			bookService.saveNewBook(bookTemp);
+			bookDTO.setLanguage(langService.saveIfNotExitsLanguage(bookDTO.getLanguage()));
+			bookService.saveNewBook(bookDTO.toBook());
 			attributes.addFlashAttribute("saved", true);
 		}
 
@@ -114,8 +149,7 @@ public class AdminController {
 	public ModelAndView showListAuthor() {
 
 		ModelAndView mv = new ModelAndView("/author_templates/list_authors");
-		List<Author> listAuthor = new ArrayList<Author>();
-
+		List<Author> listAuthor = authorService.getAllAuthors();
 		mv.addObject("listAuthor", listAuthor);
 		return mv;
 	}

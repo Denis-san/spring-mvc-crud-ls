@@ -21,6 +21,7 @@ public class BookDaoImpl implements BookDao {
 	@Override
 	public void saveBook(Book book) {
 		entityManager.persist(book);
+		System.out.println("ID do livro: " + book.getId());
 	}
 
 	@Override

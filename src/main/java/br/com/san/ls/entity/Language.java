@@ -1,12 +1,16 @@
 package br.com.san.ls.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -23,6 +27,9 @@ public class Language {
 	@NotBlank
 	@Column(name = "language_book")
 	private String language;
+
+	@OneToMany(mappedBy = "language", cascade = {  CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
+	private List<Book> books = new ArrayList<Book>();
 
 	public Language() {
 
@@ -46,9 +53,13 @@ public class Language {
 		return id;
 	}
 
+	public List<Book> getBooks() {
+		return books;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, language);
+		return Objects.hash(language);
 	}
 
 	@Override
@@ -60,7 +71,8 @@ public class Language {
 		if (getClass() != obj.getClass())
 			return false;
 		Language other = (Language) obj;
-		return Objects.equals(id, other.id) && Objects.equals(language, other.language);
+		return Objects.equals(language, other.language);
 	}
 
+	
 }
