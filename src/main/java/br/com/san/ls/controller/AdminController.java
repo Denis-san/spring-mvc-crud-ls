@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,6 +54,7 @@ public class AdminController {
 	public ModelAndView searchAuthorToAdd(final BookDTO bookDTO, BindingResult bdResult, @RequestParam String search) {
 		ModelAndView mv = new ModelAndView("/register_book_templates/register_book.html");
 
+		// change to like sql search
 		List<Author> resultAuthors = authorService.getAllAuthors();
 
 		if (!search.isBlank()) {
@@ -69,9 +71,9 @@ public class AdminController {
 
 		String authorId = request.getParameter("addAuthor");
 
-		if(authorId.isBlank()) {
+		if (authorId.isBlank()) {
 			bookDTO.getAuthors().add(new Author());
-		}else {
+		} else {
 			try {
 				Integer theAuthord = Integer.valueOf(authorId);
 				bookDTO.getAuthors().add(authorService.getAuthorById(theAuthord));
@@ -79,9 +81,10 @@ public class AdminController {
 				mv.addObject("errorAuthorId", err);
 			}
 		}
-		
-		List<Language> listAllLanguages = langService.getAllLanguages();
-		mv.addObject("allLanguages", listAllLanguages);
+
+		addFillForLanguageField(bookDTO, mv);
+
+		mv.addObject("bookDTO", bookDTO);
 
 		return mv;
 	}
@@ -94,8 +97,29 @@ public class AdminController {
 		final Integer rowId = Integer.valueOf(req.getParameter("removeBook"));
 		bookDTO.getAuthors().remove(rowId.intValue());
 
+		addFillForLanguageField(bookDTO, mv);
+
+		return mv;
+	}
+
+	@RequestMapping(value = "/register", params = { "newLanguage" })
+	public ModelAndView newLanguage(BookDTO bookDTO) {
+		ModelAndView mv = new ModelAndView("/register_book_templates/register_book");
+
+		mv.addObject("newLang", true);
+
+		return mv;
+	}
+
+	@RequestMapping(value = "/register", params = { "cancelNewLanguage" })
+	public ModelAndView cancelNewLanguage(BookDTO bookDTO) {
+		ModelAndView mv = new ModelAndView("/register_book_templates/register_book");
+
+		mv.addObject("newLang", false);
+
 		List<Language> listAllLanguages = langService.getAllLanguages();
 		mv.addObject("allLanguages", listAllLanguages);
+
 		return mv;
 	}
 
@@ -105,12 +129,26 @@ public class AdminController {
 
 		ModelAndView mv = new ModelAndView("redirect:/admin/register");
 
+		List<Language> listAllLanguages = langService.getAllLanguages();
+
+		if (bookDTO.getLanguage().getLanguage() == null && bookDTO.getLanguage().getId() == null) {
+			bdResult.addError(new FieldError("errorLang", "language.id", "Não deve ser nulo!"));
+		}
+
 		if (bdResult.hasErrors()) {
-			List<Language> listAllLanguages = langService.getAllLanguages();
-			mv.addObject("allLanguages", listAllLanguages);
+			if (bookDTO.getLanguage().getId() == null && bookDTO.getLanguage().getLanguage() != null) {
+				mv.addObject("newLang", true);
+			} else {
+				mv.addObject("allLanguages", listAllLanguages);
+			}
 			mv.setViewName("/register_book_templates/register_book");
 		} else {
-			bookDTO.setLanguage(langService.saveIfNotExitsLanguage(bookDTO.getLanguage()));
+
+			Language lang = listAllLanguages.stream().filter(e -> e.equals(bookDTO.getLanguage())).findFirst()
+					.orElse(bookDTO.getLanguage());
+
+			bookDTO.setLanguage(lang);
+
 			bookService.saveNewBook(bookDTO.toBook());
 			attributes.addFlashAttribute("saved", true);
 		}
@@ -209,6 +247,15 @@ public class AdminController {
 		// if else
 		mv.addObject("deleted", true);
 		return mv;
+	}
+
+	private void addFillForLanguageField(BookDTO bookDTO, ModelAndView mv) {
+		if (bookDTO.getLanguage().getId() == null && bookDTO.getLanguage().getLanguage() != null) {
+			mv.addObject("newLang", true);
+		} else {
+			List<Language> listAllLanguages = langService.getAllLanguages();
+			mv.addObject("allLanguages", listAllLanguages);
+		}
 	}
 
 }

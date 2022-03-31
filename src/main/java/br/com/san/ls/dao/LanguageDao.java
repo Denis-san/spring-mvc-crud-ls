@@ -6,7 +6,7 @@ import br.com.san.ls.entity.Language;
 
 public interface LanguageDao {
 
-	public Language saveIfNotExist(Language lang);
+	public Language saveLanguage(Language lang);
 	
 	public List<Language> allLanguages();
 	

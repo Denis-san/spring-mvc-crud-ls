@@ -1,11 +1,12 @@
 package br.com.san.ls.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
@@ -21,16 +22,11 @@ public class LanguageDaoImpl implements LanguageDao {
 	private EntityManager entityManager;
 
 	@Override
-	public Language saveIfNotExist(Language lang) {
+	public Language saveLanguage(Language lang) {
 
-		Language langResult = getLanguageByName(lang.getLanguage());
-		
-		if(langResult == null) {
-			entityManager.persist(lang);
-			langResult = lang;
-		}
-		
-		return langResult;
+		entityManager.persist(lang);
+
+		return lang;
 
 	}
 
@@ -46,20 +42,23 @@ public class LanguageDaoImpl implements LanguageDao {
 
 	@Override
 	public Language getLanguageByName(String nameLanguage) {
-		Query query = entityManager.createQuery("SELECT l FROM Language l WHERE l.language = :language",
+		TypedQuery<Language> query = entityManager.createQuery("SELECT l FROM Language l WHERE l.language = :language",
 				Language.class);
 		query.setParameter("language", nameLanguage);
-		
+
 		Language langResult = null;
-		
+
 		try {
 			langResult = (Language) query.getSingleResult();
-		}catch(NoResultException err) {
+		} catch (NoResultException err) {
 			langResult = null;
+		} catch (NonUniqueResultException e) {
+			Optional<Language> op = query.getResultStream().findFirst();
+			langResult = op.get();
 		}
-		
+
 		return langResult;
-		
+
 	}
 
 }

@@ -9,5 +9,5 @@ public interface AuthorDao {
 	public List<Author> listAllAuthors();
 
 	public Author findAuthorById(Integer authorId);
-	
+
 }

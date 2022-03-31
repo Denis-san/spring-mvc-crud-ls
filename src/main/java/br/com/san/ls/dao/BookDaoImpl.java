@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import br.com.san.ls.entity.Book;
+import br.com.san.ls.entity.Language;
 
 @Repository
 @Transactional
@@ -20,8 +21,16 @@ public class BookDaoImpl implements BookDao {
 
 	@Override
 	public void saveBook(Book book) {
-		entityManager.persist(book);
-		System.out.println("ID do livro: " + book.getId());
+
+		Language lang = book.getLanguage();
+		lang.getBooks().add(book);
+
+		if (book.getLanguage().getId() != null) {
+			book.setLanguage(entityManager.find(Language.class, book.getLanguage().getId()));
+		}
+
+		entityManager.merge(book);
+
 	}
 
 	@Override

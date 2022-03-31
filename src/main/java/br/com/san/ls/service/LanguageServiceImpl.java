@@ -10,22 +10,28 @@ import br.com.san.ls.entity.Language;
 
 @Service
 public class LanguageServiceImpl implements LanguageService {
-	
+
 	@Autowired
 	private LanguageDao langDao;
 
 	@Override
 	public Language saveIfNotExitsLanguage(Language lang) {
-		
-		Language langResut = langDao.saveIfNotExist(lang);
-		
-		return langResut;
+
+		Language langResult = langDao.getLanguageByName(lang.getLanguage());
+
+		if (langResult == null) {
+			langResult = lang;
+		}
+
+		langDao.saveLanguage(langResult);
+
+		return langResult;
 
 	}
 
 	@Override
 	public List<Language> getAllLanguages() {
-		
+
 		return langDao.allLanguages();
 	}
 

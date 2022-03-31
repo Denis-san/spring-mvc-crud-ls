@@ -41,7 +41,7 @@ public class BookDTO implements Serializable {
 	@NotBlank
 	private String publishCompany;
 
-	@Valid
+	@NotNull
 	private Language language;
 
 	@NotNull
@@ -194,6 +194,7 @@ public class BookDTO implements Serializable {
 		book.setNumberPages(this.numberPages);
 		book.setInventoryQuantity(this.inventoryQuantity);
 		book.setShelfCode(this.shelfCode);
+		book.getAuthors().addAll(this.authors);
 
 		return book;
 	}
@@ -210,7 +211,7 @@ public class BookDTO implements Serializable {
 		book.setNumberPages(this.numberPages);
 		book.setInventoryQuantity(this.inventoryQuantity);
 		book.setShelfCode(this.shelfCode);
-
+		book.getAuthors().addAll(this.authors);
 		return book;
 	}
 
@@ -226,7 +227,7 @@ public class BookDTO implements Serializable {
 		this.numberPages = book.getNumberPages();
 		this.inventoryQuantity = book.getInventoryQuantity();
 		this.shelfCode = book.getShelfCode();
-
+		this.authors.addAll(book.getAuthors());
 		return book;
 	}
 

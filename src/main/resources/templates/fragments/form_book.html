@@ -6,7 +6,7 @@
 		autores para esse livro!
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	</div>
-	
+
 	<div class="alert text-white bg-danger alert-dismissible fade show border-0 rounded-0 shadow" role="alert"
 		th:if="${errorAuthorId}">
 		<i class="bi bi-exclamation-diamond-fill me-2"></i><strong>Oops! </strong> Erro ao adicionar esse autor!
@@ -19,8 +19,8 @@
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	</div>
 
-	<form action="" method="post" th:action="@{/admin/register}" th:object="${bookDTO}" onsubmit="return submitForm(this)"
-		enctype="multipart/form-data">
+	<form action="" method="post" th:action="@{/admin/register}" th:object="${bookDTO}"
+		onsubmit="return submitForm(this)" enctype="multipart/form-data">
 		<div class="row align-items-md-stretch g-5">
 
 			<div class="col-md-4">
@@ -60,28 +60,55 @@
 							</div>
 
 							<div class="row g-3">
-								<div class="col-md-4">
+
+								<div class="col-md-5" th:if="${newLang == true}">
 
 									<label for="inputLanguage" class="form-label">Idioma:</label>
-									<input class="form-control rounded-pill" list="datalistOptions"
-										th:field="*{language.language}" th:errorclass="is-invalid" autocomplete="off">
-									<datalist id="datalistOptions">
-
-										<option th:each="language : ${allLanguages}" th:value="${language.language}"
-											th:text="${language.language}">
-									</datalist>
-
+									<div class="input-group">
+										<input list="lang" class="form-control rounded-pill"
+											th:field="*{language.language}" th:errorclass="is-invalid">
+										<button class="btn rounded-circle ms-2 p-0 text-muted" type="submit"
+											name="cancelNewLanguage">
+											<i class="bi bi-x-circle fs-5"></i>
+										</button>
+									</div>
 									<div class="invalid-feedback" th:errors="*{language.language}"></div>
 
 								</div>
+
+
+								<div class="col-md-5" th:if="${newLang == null || newLang != true}">
+
+									<label for="inputLanguage" class="form-label">Idioma:</label>
+
+									<div class="input-group">
+
+										<select th:field="*{language.id}" th:errorclass="is-invalid"
+											class="form-control rounded-pill">
+											<option value="">Selecione...</option>
+											<option th:each="languageDB : ${allLanguages}"
+												th:text="${languageDB.language}" th:value="${languageDB.id}"></option>
+										</select>
+										<button class="btn rounded-circle ms-2 p-0 text-muted" type="submit"
+											name="newLanguage">
+											<i class="bi bi-plus-circle fs-5"></i>
+										</button>
+									</div>
+									<div id="emailHelp" class="form-text">Para nova linguagem, clique no botão ao lado.
+									</div>
+									<div class="invalid-feedback" th:errors="*{language.id}">
+									</div>
+
+								</div>
+
 								<div class="col-md-5">
 									<label for="inputPublishCompany" class="form-label">Editora:</label>
 									<input type="text" class="form-control rounded-pill" id="inputPublishCompany"
 										th:field="*{publishCompany}" th:errorclass="is-invalid">
 									<div class="invalid-feedback" th:errors="*{publishCompany}"></div>
 								</div>
-								<div class="col-md-3">
-									<label for="inputYearPublish" class="form-label">Ano de lançamento:</label>
+								<div class="col-md-2">
+									<label for="inputYearPublish" class="form-label">Ano de lanç.:</label>
 									<input type="text" class="form-control rounded-pill" id="inputYearPublish"
 										th:field="*{year}" th:errorclass="is-invalid">
 									<div class="invalid-feedback" th:errors="*{year}"></div>
@@ -133,12 +160,33 @@
 						</div>
 
 						<div class="w-100 mt-0 p-4">
-							<div th:each="author,rowStat : *{authors}" id="divAuthors">
 
-								<div class="row p-3 bg-white card-info shadow mb-3">
 
-									<h5>Dados do Autor: <span th:text="${rowStat.count}"></span></h5>
-									<div class="col-md-6">
+							<div>
+								<div class="row p-3 bg-white card-info shadow mb-3"
+									th:each="author,rowStat : *{authors}" id="divAuthors">
+
+									<h5>Dados do Autor <span th:text="${rowStat.count}"></span>:</h5>
+
+
+									<div th:if="*{authors[__${rowStat.index}__].id} != null">
+
+
+										<input type="hidden" th:field="*{authors[__${rowStat.index}__].id}">
+										<input type="hidden" th:field="*{authors[__${rowStat.index}__].nationality}">
+
+										<div class="alert bg-primary border-0 py-2 rounded-pill text-white alert-dismissible fade show"
+											role="alert">
+											<input class="form-control fw-bold text-white bg-transparent border-0 p-0"
+												type="text" value="Disabled readonly input"
+												aria-label="Disabled input example" readonly
+												th:field="*{authors[__${rowStat.index}__].name}">
+											<button type="submit" name="removeBook" th:value="${rowStat.index}"
+												class="btn-close bg-white rounded-circle p-2 m-1"></button>
+										</div>
+									</div>
+
+									<div class="col-md-6" th:if="*{authors[__${rowStat.index}__].id} == null">
 										<label for="inputNameAuthor" class="form-label">Nome do autor:</label>
 										<input type="text" class="form-control rounded-pill" id="inputNameAuthor"
 											th:field="*{authors[__${rowStat.index}__].name}" th:errorclass="is-invalid">
@@ -147,7 +195,7 @@
 
 									</div>
 
-									<div class="col-md-6">
+									<div class="col-md-6" th:if="*{authors[__${rowStat.index}__].id} == null">
 										<label for="inputNationality" class="form-label">Nacionalidade:</label>
 										<input type="text" class="form-control rounded-pill"
 											th:field="*{authors[__${rowStat.index}__].nationality}"
@@ -157,7 +205,7 @@
 										</div>
 									</div>
 
-									<div class="mb-3">
+									<div class="mb-3" th:if="*{authors[__${rowStat.index}__].id} == null">
 										<label for="iputBiography" class="form-label">Biografia:</label>
 										<textarea class="form-control" id="iputBiography" rows="4"
 											th:field="*{authors[__${rowStat.index}__].biography}"
@@ -167,7 +215,7 @@
 										</div>
 									</div>
 
-									<div class="col-12 pb-4 mt-3">
+									<div class="col-12 pb-4 mt-3" th:if="*{authors[__${rowStat.index}__].id} == null">
 										<div class="d-grid gap-2 col-5 mx-auto">
 											<button type="submit" name="removeBook" th:value="${rowStat.index}"
 												class="btn btn-danger" onclick="btnRemoveAuthorCliked()">

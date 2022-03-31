@@ -48,6 +48,10 @@ public class Author implements Serializable {
 		this.biography = biography;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -104,6 +108,7 @@ public class Author implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Author [biography=" + biography + ", nationality=" + nationality + ", name=" + name + "]";
+		return "Author [" + "id=" + id + ", biography=" + biography + ", nationality=" + nationality + ", name=" + name
+				+ "]";
 	}
 }

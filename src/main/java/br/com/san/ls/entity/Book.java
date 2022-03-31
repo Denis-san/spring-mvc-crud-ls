@@ -39,7 +39,7 @@ public class Book implements Serializable {
 	@Column(name = "publish_company")
 	private String publishCompany;
 
-	@ManyToOne(cascade = {  CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "language_id")
 	private Language language;
 
@@ -79,6 +79,10 @@ public class Book implements Serializable {
 		this.shelfCode = shelfCode;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 	public String getTitle() {
 		return title;
 	}
