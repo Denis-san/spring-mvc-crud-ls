@@ -171,10 +171,10 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView("/list_book_templates/list_books");
 
 		List<Book> results;
-		
+
 		if (search.isBlank()) {
 			results = bookService.getAllBooks();
-		}else {
+		} else {
 			results = bookService.searchBook(search);
 		}
 

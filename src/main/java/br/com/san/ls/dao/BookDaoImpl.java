@@ -49,4 +49,15 @@ public class BookDaoImpl implements BookDao {
 		return result;
 	}
 
+	@Override
+	public List<Book> findBookBySearchTitle(String search) {
+		search = search.toLowerCase();
+		TypedQuery<Book> query = entityManager.createQuery("SELECT b FROM Book b WHERE LOWER(b.title) LIKE :search",
+				Book.class);
+		query.setParameter("search", "%" + search + "%");
+
+		List<Book> result = query.getResultList();
+		return result;
+	}
+
 }

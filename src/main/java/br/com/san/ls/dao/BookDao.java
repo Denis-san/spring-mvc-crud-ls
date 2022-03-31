@@ -11,5 +11,7 @@ public interface BookDao {
 	public List<Book> listAllBooks();
 
 	public Book findBookById(Integer id);
+
+	public List<Book> findBookBySearchTitle(String search);
 	
 }
