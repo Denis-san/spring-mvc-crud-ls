@@ -42,4 +42,11 @@ public class BookDaoImpl implements BookDao {
 		return booksResult;
 	}
 
+	@Override
+	public Book findBookById(Integer id) {
+		Book result = entityManager.find(Book.class, id);
+
+		return result;
+	}
+
 }

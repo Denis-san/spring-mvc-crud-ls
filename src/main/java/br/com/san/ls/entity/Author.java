@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,6 +26,7 @@ public class Author implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@Column(length = 500)
 	private String biography;
 	@NotNull
 	@NotBlank

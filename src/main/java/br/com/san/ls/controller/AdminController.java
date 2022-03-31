@@ -169,14 +169,10 @@ public class AdminController {
 	}
 
 	@GetMapping("/listBooks/book/{id}")
-	public ModelAndView showBookDetails(@PathVariable(required = true, name = "id") Integer id, Book book) {
+	public ModelAndView showBookDetails(@PathVariable(required = true, name = "id") Integer id) {
 		ModelAndView mv = new ModelAndView("/list_book_templates/book_details");
 
-		// get from the database by id
-
-		// get from the database
-		Book bookTemp = new Book();
-		bookTemp.setLanguage(new Language());
+		Book bookTemp = bookService.getBookById(id);
 
 		mv.addObject("book", bookTemp);
 
@@ -193,12 +189,10 @@ public class AdminController {
 	}
 
 	@GetMapping("/listAuthors/author/{id}")
-	public ModelAndView showAuthorDetails(@PathVariable(required = true, name = "id") Integer id, Author author) {
+	public ModelAndView showAuthorDetails(@PathVariable(required = true, name = "id") Integer id) {
 		ModelAndView mv = new ModelAndView("/author_templates/author_details");
 
-		// get from the database by id
-		// get from the database
-		Author authorTemp = new Author();
+		Author authorTemp = authorService.getAuthorById(id);
 
 		mv.addObject("author", authorTemp);
 

@@ -30,11 +30,10 @@
 						Livros:
 					</h5>
 
-
-					<!-- th:each, get database books -->
 					<ul>
-						<li>
-							<a></a>
+						<li th:each="book : ${author.books}">
+							<a class="text-dark" th:text="${book.title}"
+								th:href="@{/admin/listBooks/book/{id}(id = ${book.id})}"></a>
 						</li>
 					</ul>
 

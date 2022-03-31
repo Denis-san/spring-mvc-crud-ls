@@ -22,9 +22,13 @@
 							Holmes
 						</h5>
 
+						<div class="card-text my-3 ps-2 row row-cols-auto">
+							<div class="col px-1" th:each="author : ${book.authors}">
+								<a href="author" th:href="@{/admin/listAuthors/author/{id}(id = ${author.id})}">
+									<span th:text="${author.name}"></span>
+								</a>
+							</div>
 
-						<div class="card-text my-3" th:each="author : ${book.authors}">
-							<a href="author" th:text="${author.name}">Arthur Conan Doyle </a>
 						</div>
 
 						<div class="fw-bold">
@@ -43,11 +47,11 @@
 							<p>Número de páginas:
 								<span class="fw-normal" th:text="${book.numberPages}">198</span>
 							</p>
-							
+
 							<p>Edição:
 								<span class="fw-normal" th:text="${book.edition}">1º</span>
 							</p>
-							
+
 							<p>Estoque:
 								<span class="fw-normal" th:text="${book.inventoryQuantity}">4</span>
 								<span th:text="${book.inventoryQuantity == 1} ? 'Unidade' : 'Unidades'"></span>
@@ -57,7 +61,7 @@
 				</div>
 			</div>
 
-			<div class="accordion accordion-flush" id="accordionFlushExample">	
+			<div class="accordion accordion-flush" id="accordionFlushExample">
 				<div class=" card-info">
 					<h2 class="accordion-header card-info" id="flush-headingOne">
 						<button class="w-100 btn py-1 fw-normal  card-info" type="button" data-bs-toggle="collapse"

@@ -31,6 +31,8 @@ public class Book implements Serializable {
 	private String title;
 	private String isbn;
 	private String edition;
+	
+	@Column(length = 500)
 	private String description;
 	@Column(name = "path_cloak")
 	private String pathCloak;

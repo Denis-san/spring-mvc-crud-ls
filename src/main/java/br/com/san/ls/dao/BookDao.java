@@ -9,5 +9,7 @@ public interface BookDao {
 	public void saveBook(Book book);
 	
 	public List<Book> listAllBooks();
+
+	public Book findBookById(Integer id);
 	
 }
