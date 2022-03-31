@@ -44,7 +44,6 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView("/register_book_templates/register_book.html");
 		List<Language> listAllLanguages = langService.getAllLanguages();
 
-		// CHANGE TO BOOKDTO
 		mv.addObject("bookDTO", new BookDTO());
 		mv.addObject("allLanguages", listAllLanguages);
 		return mv;
@@ -161,10 +160,26 @@ public class AdminController {
 	public ModelAndView showListBook() {
 		ModelAndView mv = new ModelAndView("/list_book_templates/list_books");
 
-		// get from the database
-		List<Book> books = bookService.getAllBooks();
+		List<Book> books = new ArrayList<Book>();
 
 		mv.addObject("listBook", books);
+		return mv;
+	}
+
+	@RequestMapping("/listBooks/search")
+	public ModelAndView searchBook(@RequestParam(name = "search") String search) {
+		ModelAndView mv = new ModelAndView("/list_book_templates/list_books");
+
+		List<Book> results;
+		
+		if (search.isBlank()) {
+			results = bookService.getAllBooks();
+		}else {
+			results = bookService.searchBook(search);
+		}
+
+		mv.addObject("listBook", results);
+		mv.addObject("search", search);
 		return mv;
 	}
 
@@ -181,10 +196,28 @@ public class AdminController {
 
 	@GetMapping("/listAuthors")
 	public ModelAndView showListAuthor() {
-
 		ModelAndView mv = new ModelAndView("/author_templates/list_authors");
-		List<Author> listAuthor = authorService.getAllAuthors();
+
+		List<Author> listAuthor = new ArrayList<Author>();
 		mv.addObject("listAuthor", listAuthor);
+		return mv;
+	}
+
+	@RequestMapping("/listAuthors/search")
+	public ModelAndView searchAuthor(@RequestParam(name = "search") String search) {
+		ModelAndView mv = new ModelAndView("/author_templates/list_authors");
+
+		List<Author> result;
+
+		if (search.isBlank()) {
+			result = authorService.getAllAuthors();
+		} else {
+			result = authorService.searchAuthorByName(search);
+		}
+
+		mv.addObject("listAuthor", result);
+		mv.addObject("search", search);
+
 		return mv;
 	}
 

@@ -9,20 +9,19 @@
 
 	<div th:insert="/fragments/menu_admin :: menu"></div>
 
-		<div class="container mb-4">
-			<form>
-				<div class="input-group input-group border rounded-pill">
-					<input id="inputSearch" type="text" class="form-control border-0 rounded-pill"
-						aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+	<div class="container mb-4">
+		<form action="/admin/listAuthors/search" th:action="@{/admin/listAuthors/search}">
+			<div class="input-group input-group border rounded-pill">
+				<input id="inputSearch" type="text" class="form-control border-0 rounded-pill"
+					aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" th:value="${search}" name="search" th:name="search">
 
-					<a href="/book/search?=''"
-						class="text-decoration-none input-group-text border-0 rounded-pill bg-white">
-						<span id="inputGroup-sizing-lg"><i class="bi bi-search"></i></span>
-					</a>
-				</div>
-			</form>
-		</div>
-	
+				<button type="submit" class="text-decoration-none input-group-text border-0 rounded-pill bg-white">
+					<span id="inputGroup-sizing-lg"><i class="bi bi-search"></i></span>
+				</button>
+			</div>
+		</form>
+	</div>
+
 	<div th:if="${listAuthor.empty}">
 
 		<div>
