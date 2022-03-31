@@ -10,4 +10,6 @@ public interface AuthorDao {
 
 	public Author findAuthorById(Integer authorId);
 
+	public List<Author> searchAuthorName(String searchName);
+
 }

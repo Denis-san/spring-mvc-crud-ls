@@ -55,7 +55,7 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView("/register_book_templates/register_book.html");
 
 		// change to like sql search
-		List<Author> resultAuthors = authorService.getAllAuthors();
+		List<Author> resultAuthors = authorService.searchAuthorByName(search);
 
 		if (!search.isBlank()) {
 			mv.addObject("searchAuthorObj", search);

@@ -28,4 +28,12 @@ public class AuthorServiceImpl implements AuthorService {
 		return resultAuthor;
 	}
 
+	@Override
+	public List<Author> searchAuthorByName(String searchName) {
+
+		List<Author> results = authorDao.searchAuthorName(searchName);
+
+		return results;
+	}
+
 }

@@ -32,4 +32,18 @@ public class AuthorDaoImpl implements AuthorDao {
 		return entityManager.find(Author.class, authorId);
 	}
 
+	@Override
+	public List<Author> searchAuthorName(String searchName) {
+
+		searchName = searchName.toLowerCase();
+		TypedQuery<Author> query = entityManager.createQuery("SELECT a FROM Author a WHERE LOWER(a.name) LIKE :search",
+				Author.class);
+		query.setParameter("search", "%" + searchName + "%");
+
+		List<Author> results = query.getResultList();
+
+		return results;
+
+	}
+
 }
