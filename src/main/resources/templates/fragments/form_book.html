@@ -19,7 +19,7 @@
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	</div>
 
-	<form action="" method="post" th:action="@{/admin/register}" th:object="${bookDTO}"
+	<form action="" method="post" th:action="@{/book/register}" th:object="${bookDTO}"
 		onsubmit="return submitForm(this)" enctype="multipart/form-data">
 		<div class="row align-items-md-stretch g-5">
 
@@ -168,9 +168,7 @@
 
 									<h5>Dados do Autor <span th:text="${rowStat.count}"></span>:</h5>
 
-
 									<div th:if="*{authors[__${rowStat.index}__].id} != null">
-
 
 										<input type="hidden" th:field="*{authors[__${rowStat.index}__].id}">
 										<input type="hidden" th:field="*{authors[__${rowStat.index}__].nationality}">
@@ -181,7 +179,13 @@
 												type="text" value="Disabled readonly input"
 												aria-label="Disabled input example" readonly
 												th:field="*{authors[__${rowStat.index}__].name}">
-											<button type="submit" name="removeBook" th:value="${rowStat.index}"
+
+											<a th:href="@{/author/editAuthor(id=*{authors[__${rowStat.index}__].id})}"
+												class="btn-close me-5 bg-white rounded-circle p-2 m-1"
+												id="btn-edit-author">
+											</a>
+
+											<button type="submit" name="removeAuthor" th:value="${rowStat.index}"
 												class="btn-close bg-white rounded-circle p-2 m-1"></button>
 										</div>
 									</div>
@@ -217,7 +221,7 @@
 
 									<div class="col-12 pb-4 mt-3" th:if="*{authors[__${rowStat.index}__].id} == null">
 										<div class="d-grid gap-2 col-5 mx-auto">
-											<button type="submit" name="removeBook" th:value="${rowStat.index}"
+											<button type="submit" name="removeAuthor" th:value="${rowStat.index}"
 												class="btn btn-danger" onclick="btnRemoveAuthorCliked()">
 												<i class="bi bi-trash me-2"></i>
 												Remover autor</button>

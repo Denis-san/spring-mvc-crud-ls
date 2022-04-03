@@ -10,7 +10,7 @@
 	<div th:insert="/fragments/menu_admin :: menu"></div>
 
 	<div class="container mb-4">
-		<form action="/admin/listAuthors/search" th:action="@{/admin/listAuthors/search}">
+		<form action="/book/listAuthors/search" th:action="@{/author/listAuthors/search}">
 			<div class="input-group input-group border rounded-pill">
 				<input id="inputSearch" type="text" class="form-control border-0 rounded-pill"
 					aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" th:value="${search}" name="search" th:name="search">
@@ -55,8 +55,8 @@
 							<td th:text="${author.nationality}">Title</td>
 							<td th:text="45">Publish Company</td>
 							<td class="text-center">
-								<a class="btn btn-outline-secondary" href="/admin/listAuthors/author/"
-									th:href="@{/admin/listAuthors/author/{id}(id = ${author.id})}">
+								<a class="btn btn-outline-secondary" href="/book/listAuthors/author/"
+									th:href="@{/author/listAuthors/author/{id}(id = ${author.id})}">
 									<i class="bi bi-info-circle"></i>
 								</a>
 							</td>

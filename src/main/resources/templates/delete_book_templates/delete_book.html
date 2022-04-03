@@ -70,8 +70,8 @@
 								</td>
 								<td th:text="${book.publishCompany}">Publish Company</td>
 								<td class="text-center">
-									<a class="btn btn-outline-danger" href="/admin/delete/book/"
-										th:href="@{/admin/delete/book(id=${book.id})}" onclick="return confirmDelete()">
+									<a class="btn btn-outline-danger" href="/book/delete/book/"
+										th:href="@{/book/delete/book(id=${book.id})}" onclick="return confirmDelete()">
 										<i class="bi bi-trash"></i>
 									</a>
 								</td>

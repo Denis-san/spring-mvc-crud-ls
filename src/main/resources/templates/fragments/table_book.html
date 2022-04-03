@@ -1,8 +1,7 @@
-<div th:fragment="tableBook (btType, btIcon, pathAction)" class="container-xxl px-5 mt-4">
+<div th:fragment="tableBook (btType, btIcon, pathSearch, pathAction)" class="container-xxl px-5 mt-4">
 	<div>
-
 		<div class="container mb-4">
-			<form action="/admin" th:action="@{/admin/listBooks/search}">
+			<form action="/book" th:action="@{${pathSearch}}">
 				<div class="input-group input-group border rounded-pill">
 					<input id="inputSearch" type="text" class="form-control border-0 rounded-pill"
 						aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" th:value="${search}"
@@ -51,12 +50,12 @@
 								<td>
 									<div th:each="author : ${book.authors}" class="text-truncate">
 										<a href="" th:text="${author.name}"
-											th:href="@{/admin/listAuthors/author/{id}(id = ${author.id})}">authors</a>
+											th:href="@{/book/listAuthors/author/{id}(id = ${author.id})}">authors</a>
 									</div>
 								</td>
 								<td th:text="${book.publishCompany}">Publish Company</td>
 								<td class="text-center">
-									<a th:class="${btType}" href="/admin/listBooks/book/"
+									<a th:class="${btType}" href="/book/listBooks/book/"
 										th:href="@{${pathAction} + ${book.id}}">
 										<i th:class="${btIcon}"></i>
 									</a>

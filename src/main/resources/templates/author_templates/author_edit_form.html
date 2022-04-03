@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head
+	th:replace="/fragments/head_fragment :: head(title='Editar autor - Library System', scriptPath='/script/script_admin_home.js', stylePath='/style/style_author_edit.css')">
+</head>
+
+<body>
+
+	<div th:insert="/fragments/menu_admin :: menu"></div>
+
+	<div class="container">
+
+		<div class="card border-0 p-5 card-info shadow">
+
+			<form action="/editAuthor" th:action="@{/author/editAuthor/edit}" th:object="${author}" method="post">
+
+				<h4>Editar autor:</h4>
+				<input type="hidden" th:field="*{id}">
+				<div class="row g-3">
+					<div class="col-md-6">
+						<label for="inputAuthorName" class="form-label">Nome:</label>
+						<input type="text" class="form-control" id="inputAuthorName" th:field="*{name}"
+							th:errorclass="is-invalid">
+						<div class="invalid-feedback" th:errors="*{name}"></div>
+					</div>
+					<div class="col-md-6">
+						<label for="inputAuthorNationality" class="form-label">Nacionalidade:</label>
+						<input type="text" class="form-control" id="inputAuthorNationality" th:field="*{nationality}"
+							th:errorclass="is-invalid">
+						<div class="invalid-feedback" th:errors="*{nationality}"></div>
+					</div>
+					<div class="col-12">
+						<label for="inputAuthorBio" class="form-label">Biografia:</label>
+						<textarea class="form-control" rows="4" id="inputAuthorBio" th:field="*{biography}"> </textarea>
+					</div>
+					<div class="col-12">
+						<button type="submit" class="btn btn-primary">Salvar!</button>
+					</div>
+				</div>
+
+			</form>
+
+		</div>
+
+
+	</div>
+
+</body>
+
+
+</html>

@@ -27,8 +27,8 @@ import br.com.san.ls.service.BookService;
 import br.com.san.ls.service.LanguageService;
 
 @Controller
-@RequestMapping("/admin")
-public class AdminController {
+@RequestMapping("/book")
+public class BookController {
 
 	@Autowired
 	private AuthorService authorService;
@@ -53,7 +53,6 @@ public class AdminController {
 	public ModelAndView searchAuthorToAdd(final BookDTO bookDTO, BindingResult bdResult, @RequestParam String search) {
 		ModelAndView mv = new ModelAndView("/register_book_templates/register_book.html");
 
-		// change to like sql search
 		List<Author> resultAuthors = authorService.searchAuthorByName(search);
 
 		if (!search.isBlank()) {
@@ -87,13 +86,13 @@ public class AdminController {
 
 		return mv;
 	}
-
-	@RequestMapping(value = "/register", params = { "removeBook" })
+	
+	@RequestMapping(value = "/register", params = { "removeAuthor" })
 	public ModelAndView removeRow(final BookDTO bookDTO, final BindingResult bindingResult,
 			final HttpServletRequest req) {
 		ModelAndView mv = new ModelAndView("/register_book_templates/register_book.html");
 
-		final Integer rowId = Integer.valueOf(req.getParameter("removeBook"));
+		final Integer rowId = Integer.valueOf(req.getParameter("removeAuthor"));
 		bookDTO.getAuthors().remove(rowId.intValue());
 
 		addFillForLanguageField(bookDTO, mv);
@@ -126,7 +125,7 @@ public class AdminController {
 	public ModelAndView processBookRegister(@Valid BookDTO bookDTO, BindingResult bdResult,
 			RedirectAttributes attributes) {
 
-		ModelAndView mv = new ModelAndView("redirect:/admin/register");
+		ModelAndView mv = new ModelAndView("redirect:/book/register");
 
 		List<Language> listAllLanguages = langService.getAllLanguages();
 
@@ -194,44 +193,6 @@ public class AdminController {
 		return mv;
 	}
 
-	@GetMapping("/listAuthors")
-	public ModelAndView showListAuthor() {
-		ModelAndView mv = new ModelAndView("/author_templates/list_authors");
-
-		List<Author> listAuthor = new ArrayList<Author>();
-		mv.addObject("listAuthor", listAuthor);
-		return mv;
-	}
-
-	@RequestMapping("/listAuthors/search")
-	public ModelAndView searchAuthor(@RequestParam(name = "search") String search) {
-		ModelAndView mv = new ModelAndView("/author_templates/list_authors");
-
-		List<Author> result;
-
-		if (search.isBlank()) {
-			result = authorService.getAllAuthors();
-		} else {
-			result = authorService.searchAuthorByName(search);
-		}
-
-		mv.addObject("listAuthor", result);
-		mv.addObject("search", search);
-
-		return mv;
-	}
-
-	@GetMapping("/listAuthors/author/{id}")
-	public ModelAndView showAuthorDetails(@PathVariable(required = true, name = "id") Integer id) {
-		ModelAndView mv = new ModelAndView("/author_templates/author_details");
-
-		Author authorTemp = authorService.getAuthorById(id);
-
-		mv.addObject("author", authorTemp);
-
-		return mv;
-	}
-
 	@GetMapping("/editBook")
 	public ModelAndView showEditRegister() {
 		ModelAndView mv = new ModelAndView("/edit_book_templates/edit_book");
@@ -243,13 +204,32 @@ public class AdminController {
 		return mv;
 	}
 
+	@RequestMapping("/editBook/search")
+	public ModelAndView searchBookToEdit(@RequestParam(name = "search") String search) {
+		ModelAndView mv = new ModelAndView("/edit_book_templates/edit_book");
+
+		List<Book> results;
+
+		if (search.isBlank()) {
+			results = bookService.getAllBooks();
+		} else {
+			results = bookService.searchBook(search);
+		}
+
+		mv.addObject("listBook", results);
+		mv.addObject("search", search);
+		return mv;
+
+	}
+
 	@GetMapping("/editBook/edit/{id}")
-	public ModelAndView showEditForm(@PathVariable(required = true, name = "id") Integer id, Book book) {
+	public ModelAndView showEditForm(@PathVariable(required = true, name = "id") Integer id) {
 		ModelAndView mv = new ModelAndView("/edit_book_templates/edit_book_form");
 
-		// get from the database by id
-		// get from the database
-		// add this object to mv
+		if (id != null) {
+			Book bookDTO = bookService.getBookById(id);
+			mv.addObject("bookDTO", bookDTO);
+		}
 
 		return mv;
 	}

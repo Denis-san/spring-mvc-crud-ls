@@ -8,7 +8,7 @@
 
 	<div th:insert="/fragments/menu_admin :: menu"></div>
 
-	<div th:insert="/fragments/table_book :: tableBook ('btn btn-outline-primary', 'bi bi-pencil-square', '/admin/editBook/edit/')"></div>
+	<div th:insert="/fragments/table_book :: tableBook (btType='btn btn-outline-primary', btIcon='bi bi-pencil-square', pathSearch='/book/editBook/search', pathAction='/book/editBook/edit/')"></div>
 
 </body>
 

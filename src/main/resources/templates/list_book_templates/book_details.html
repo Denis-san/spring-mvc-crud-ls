@@ -24,7 +24,7 @@
 
 						<div class="card-text my-3 ps-2 row row-cols-auto">
 							<div class="col px-1" th:each="author : ${book.authors}">
-								<a href="author" th:href="@{/admin/listAuthors/author/{id}(id = ${author.id})}">
+								<a href="author" th:href="@{/author/listAuthors/author/{id}(id = ${author.id})}">
 									<span th:text="${author.name}"></span>
 								</a>
 							</div>

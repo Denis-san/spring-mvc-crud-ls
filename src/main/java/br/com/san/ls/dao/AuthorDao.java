@@ -12,4 +12,6 @@ public interface AuthorDao {
 
 	public List<Author> searchAuthorName(String searchName);
 
+	public void update(Author author);
+
 }

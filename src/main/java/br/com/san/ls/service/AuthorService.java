@@ -12,4 +12,6 @@ public interface AuthorService {
 
 	public List<Author> searchAuthorByName(String searchName);
 
+	public void updateAuthor(Author author);
+
 }

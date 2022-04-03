@@ -11,6 +11,13 @@
 
 	<div class="container">
 
+
+		<div class="alert text-white bg-success alert-dismissible fade show border-0 rounded-0 shadow" role="alert"
+			th:if="${saved == true}">
+			<i class="bi bi-check-circle-fill me-2"></i><strong>Sucesso! </strong>Autor atualizado com sucesso!
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+
 		<div class="card border-0 p-5 card-info shadow">
 
 			<h2><i class="bi bi-person-bounding-box me-3"></i><span th:text="${author.name}"></span></h2>
@@ -33,7 +40,7 @@
 					<ul>
 						<li th:each="book : ${author.books}">
 							<a class="text-dark" th:text="${book.title}"
-								th:href="@{/admin/listBooks/book/{id}(id = ${book.id})}"></a>
+								th:href="@{/book/listBooks/book/{id}(id = ${book.id})}"></a>
 						</li>
 					</ul>
 
@@ -49,6 +56,10 @@
 
 				<p th:text="${author.biography}"></p>
 
+
+				<a class="btn btn-outline-secondary mt-3" th:href="@{/author/editAuthor(id = ${author.id})}">
+					<i class="bi bi-pencil-square me-2"></i>Editar
+				</a>
 
 			</div>
 

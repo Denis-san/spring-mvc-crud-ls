@@ -4,23 +4,13 @@
 * {
     box-sizing: border-box;
 }
-  
- 
-#inputSearch{
-    background-color: white;
-    text-indent: 1%;
-    outline: none;
-    font-weight: 400;
-}
- 
+
+
 body {
     font-family: 'Quicksand', Helvetica, sans-serif;
     margin: 0;
 }
 
-thead{
-    background-color: #2f5061;
-    color: white;
-    border-radius: 50pt;
-}
-
+.card-info{
+    border-radius: 1rem;
+  }
