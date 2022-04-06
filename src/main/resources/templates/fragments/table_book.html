@@ -1,7 +1,7 @@
-<div th:fragment="tableBook (btType, btIcon, pathSearch, pathAction)" class="container-xxl px-5 mt-4">
+<div th:fragment="tableBook" class="container-xxl px-5 mt-4">
 	<div>
 		<div class="container mb-4">
-			<form action="/book" th:action="@{${pathSearch}}">
+			<form action="/book" th:action="@{/book/listBooks/search}">
 				<div class="input-group input-group border rounded-pill">
 					<input id="inputSearch" type="text" class="form-control border-0 rounded-pill"
 						aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" th:value="${search}"
@@ -50,15 +50,26 @@
 								<td>
 									<div th:each="author : ${book.authors}" class="text-truncate">
 										<a href="" th:text="${author.name}"
-											th:href="@{/book/listAuthors/author/{id}(id = ${author.id})}">authors</a>
+											th:href="@{/author/info/{id}(id = ${author.id})}">authors</a>
 									</div>
 								</td>
 								<td th:text="${book.publishCompany}">Publish Company</td>
 								<td class="text-center">
-									<a th:class="${btType}" href="/book/listBooks/book/"
-										th:href="@{${pathAction} + ${book.id}}">
-										<i th:class="${btIcon}"></i>
+									<a class="btn btn-outline-secondary" href="/book/listBooks/book/"
+										th:href="@{'/book/info/' + ${book.id}}">
+										<i class="bi bi-info-circle"></i>
 									</a>
+
+									<a class="btn btn-outline-primary" href="/book/listBooks/book/"
+										th:href="@{'/book/edit/' + ${book.id}}">
+										<i class="bi bi-pencil-square"></i>
+									</a>
+
+									<a class="btn btn-outline-danger" href="/book/listBooks/book/"
+										th:href="@{'/book/delete/' + ${book.id}}">
+										<i class="bi bi-trash"></i>
+									</a>
+
 								</td>
 							</tr>
 						</tbody>

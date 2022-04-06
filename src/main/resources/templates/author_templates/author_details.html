@@ -40,7 +40,7 @@
 					<ul>
 						<li th:each="book : ${author.books}">
 							<a class="text-dark" th:text="${book.title}"
-								th:href="@{/book/listBooks/book/{id}(id = ${book.id})}"></a>
+								th:href="@{/book/info/{id}(id = ${book.id})}"></a>
 						</li>
 					</ul>
 
@@ -57,7 +57,7 @@
 				<p th:text="${author.biography}"></p>
 
 
-				<a class="btn btn-outline-secondary mt-3" th:href="@{/author/editAuthor(id = ${author.id})}">
+				<a class="btn btn-outline-secondary mt-3" th:href="@{/author/edit(id = ${author.id})}">
 					<i class="bi bi-pencil-square me-2"></i>Editar
 				</a>
 

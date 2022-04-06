@@ -52,8 +52,7 @@ public class AuthorController {
 
 		return mv;
 	}
-
-	@GetMapping("/listAuthors/author/{id}")
+	@GetMapping("/info/{id}")
 	public ModelAndView showAuthorDetails(@PathVariable(required = true, name = "id") Integer id) {
 		ModelAndView mv = new ModelAndView("/author_templates/author_details");
 
@@ -64,7 +63,7 @@ public class AuthorController {
 		return mv;
 	}
 
-	@GetMapping("/editAuthor")
+	@GetMapping("/edit")
 	public ModelAndView showAuthorEditForm(@RequestParam Integer id) {
 		ModelAndView mv = new ModelAndView("/author_templates/author_edit_form");
 
@@ -85,7 +84,7 @@ public class AuthorController {
 			attributes.addFlashAttribute("saved", true);
 		}
 
-		return "redirect:/author/listAuthors/author/" + author.getId();
+		return "redirect:/author/info/" + author.getId();
 	}
 
 }

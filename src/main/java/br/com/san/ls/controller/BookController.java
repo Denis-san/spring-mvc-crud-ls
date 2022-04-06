@@ -179,7 +179,7 @@ public class BookController {
 		return mv;
 	}
 
-	@GetMapping("/listBooks/book/{id}")
+	@GetMapping("/info/{id}")
 	public ModelAndView showBookDetails(@PathVariable(required = true, name = "id") Integer id) {
 		ModelAndView mv = new ModelAndView("/list_book_templates/book_details");
 
@@ -190,36 +190,7 @@ public class BookController {
 		return mv;
 	}
 
-	@GetMapping("/editBook")
-	public ModelAndView showEditRegister() {
-		ModelAndView mv = new ModelAndView("/edit_book_templates/edit_book");
-
-		List<Book> books = new ArrayList<Book>();
-
-		mv.addObject("listBook", books);
-
-		return mv;
-	}
-
-	@RequestMapping("/editBook/search")
-	public ModelAndView searchBookToEdit(@RequestParam(name = "search") String search) {
-		ModelAndView mv = new ModelAndView("/edit_book_templates/edit_book");
-
-		List<Book> results;
-
-		if (search.isBlank()) {
-			results = bookService.getAllBooks();
-		} else {
-			results = bookService.searchBook(search);
-		}
-
-		mv.addObject("listBook", results);
-		mv.addObject("search", search);
-		return mv;
-
-	}
-
-	@GetMapping("/editBook/edit/{id}")
+	@GetMapping("/edit/{id}")
 	public ModelAndView showEditForm(@PathVariable(required = true, name = "id") Integer id) {
 		ModelAndView mv = new ModelAndView("/edit_book_templates/edit_book_form");
 
@@ -231,25 +202,12 @@ public class BookController {
 		return mv;
 	}
 
-	@GetMapping("/deleteBook")
+	@GetMapping("/delete/{id}")
 	public ModelAndView showDeleteRegister() {
 		ModelAndView mv = new ModelAndView("/delete_book_templates/delete_book");
 
 		// get from the database
 
-		return mv;
-	}
-
-	@GetMapping("/delete/book")
-	public ModelAndView processDelete(@RequestParam(name = "id", required = true) Integer id) {
-		ModelAndView mv = new ModelAndView("/delete_book_templates/delete_book");
-
-		// get from the database
-
-		System.out.println(id);
-
-		// if else
-		mv.addObject("deleted", true);
 		return mv;
 	}
 
