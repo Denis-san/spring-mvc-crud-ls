@@ -48,15 +48,7 @@ public class AuthorDaoImpl implements AuthorDao {
 
 	@Override
 	public void update(Author author) {
-		// get a object associated with a session by her id
-		Author authorTemp = entityManager.find(Author.class, author.getId());
-		authorTemp.setName(author.getName());
-		authorTemp.setNationality(author.getNationality());
-		authorTemp.setBiography(author.getBiography());
-
-		if (authorTemp != null) {
-			entityManager.merge(authorTemp);
-		}
+		entityManager.merge(author);
 	}
 
 }

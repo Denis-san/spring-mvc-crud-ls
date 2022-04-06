@@ -17,6 +17,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.ISBN;
+
+import br.com.san.ls.validation.Year;
 
 @Entity
 @Table(name = "book_tb")
@@ -28,32 +35,41 @@ public class Book implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@NotBlank
 	private String title;
+
+	@ISBN
 	private String isbn;
 	private String edition;
-	
+
 	@Column(length = 500)
 	private String description;
 	@Column(name = "path_cloak")
 	private String pathCloak;
 
+	@Year
 	private Integer year;
 	@Column(name = "publish_company")
 	private String publishCompany;
 
+	@Valid
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "language_id")
 	private Language language;
 
+	@Min(1)
 	@Column(name = "number_pages")
 	private Integer numberPages;
 
+	@Min(1)
 	@Column(name = "inventory_quantity")
 	private Integer inventoryQuantity;
 
+	@NotBlank
 	@Column(name = "shelf_code")
 	private String shelfCode;
 
+	@Valid
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "book_author", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "author_id") })
@@ -84,7 +100,7 @@ public class Book implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public String getTitle() {
 		return title;
 	}
@@ -207,8 +223,8 @@ public class Book implements Serializable {
 	public String toString() {
 		return "Book [id=" + id + ", title=" + title + ", isbn=" + isbn + ", edition=" + edition + ", description="
 				+ description + ", pathCloak=" + pathCloak + ", year=" + year + ", publishCompany=" + publishCompany
-				+ ", language=" + language + ", numberPages=" + numberPages + ", inventoryQuantity="
-				+ inventoryQuantity + ", shelfCode=" + shelfCode + "]";
+				+ ", language=" + language + ", numberPages=" + numberPages + ", inventoryQuantity=" + inventoryQuantity
+				+ ", shelfCode=" + shelfCode + "]";
 	}
 
 }
