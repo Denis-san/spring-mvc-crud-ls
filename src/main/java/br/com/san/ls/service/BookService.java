@@ -13,5 +13,7 @@ public interface BookService {
 	public Book getBookById(Integer id);
 
 	public List<Book> searchBook(String search);
+
+	public void deleteBookById(Integer id);
 	
 }

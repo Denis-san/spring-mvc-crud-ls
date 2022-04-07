@@ -13,5 +13,7 @@ public interface BookDao {
 	public Book findBookById(Integer id);
 
 	public List<Book> findBookBySearchTitle(String search);
+
+	public void deleteById(Integer id);
 	
 }

@@ -40,4 +40,9 @@ public class BookServiceImpl implements BookService {
 		return results;
 	}
 
+	@Override
+	public void deleteBookById(Integer id) {
+		bookDao.deleteById(id);
+	}
+
 }

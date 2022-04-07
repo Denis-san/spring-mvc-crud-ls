@@ -68,7 +68,6 @@ public class AuthorController {
 		ModelAndView mv = new ModelAndView("/author_templates/author_edit_form");
 
 		Author author = authorService.getAuthorById(id);
-
 		mv.addObject("author", author);
 
 		return mv;

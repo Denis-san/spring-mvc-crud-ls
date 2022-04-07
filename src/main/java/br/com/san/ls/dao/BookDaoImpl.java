@@ -60,4 +60,13 @@ public class BookDaoImpl implements BookDao {
 		return result;
 	}
 
+	@Override
+	public void deleteById(Integer id) {
+
+		Book result = entityManager.find(Book.class, id);
+		result.getAuthors().removeAll(result.getAuthors());
+		entityManager.remove(result);
+
+	}
+
 }

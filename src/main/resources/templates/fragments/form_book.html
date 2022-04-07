@@ -174,6 +174,7 @@
 
 										<input type="hidden" th:field="*{authors[__${rowStat.index}__].id}">
 										<input type="hidden" th:field="*{authors[__${rowStat.index}__].nationality}">
+										<input type="hidden" th:field="*{authors[__${rowStat.index}__].biography}">
 
 										<div class="alert bg-primary border-0 py-2 rounded-pill text-white alert-dismissible fade show"
 											role="alert">
@@ -182,7 +183,7 @@
 												aria-label="Disabled input example" readonly
 												th:field="*{authors[__${rowStat.index}__].name}">
 
-											<a th:href="@{/author/editAuthor(id=*{authors[__${rowStat.index}__].id})}"
+											<a th:href="@{/author/edit(id=*{authors[__${rowStat.index}__].id})}"
 												class="btn-close me-5 bg-white rounded-circle p-2 m-1"
 												id="btn-edit-author">
 											</a>

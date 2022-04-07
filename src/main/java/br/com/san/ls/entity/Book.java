@@ -53,7 +53,7 @@ public class Book implements Serializable {
 	private String publishCompany;
 
 	@Valid
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "language_id")
 	private Language language;
 
@@ -70,7 +70,7 @@ public class Book implements Serializable {
 	private String shelfCode;
 
 	@Valid
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = { CascadeType.MERGE }, fetch = FetchType.LAZY)
 	@JoinTable(name = "book_author", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "author_id") })
 	private List<Author> authors = new ArrayList<Author>();

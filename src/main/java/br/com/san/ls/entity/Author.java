@@ -35,7 +35,7 @@ public class Author implements Serializable {
 	@NotBlank
 	private String name;
 
-	@ManyToMany(mappedBy = "authors", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "authors", fetch = FetchType.LAZY)
 	private Set<Book> books = new HashSet<Book>();
 
 	public Author() {

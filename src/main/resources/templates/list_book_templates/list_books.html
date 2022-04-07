@@ -7,8 +7,19 @@
 
 <body>
 
+
 	<div th:insert="/fragments/menu_admin :: menu"></div>
-	
+
+	<div class="container">
+		<div class="alert text-white bg-success alert-dismissible fade show border-0 rounded-0 shadow" role="alert"
+			th:if="${deleted == true}">
+			<i class="bi bi-check-circle-fill me-2"></i><strong>Sucesso! </strong>Livro <strong>DELETADO</strong> com
+			sucesso!
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+
+	</div>
+
 	<div th:insert="/fragments/table_book :: tableBook"></div>
 
 </body>

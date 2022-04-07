@@ -203,12 +203,13 @@ public class BookController {
 	}
 
 	@GetMapping("/delete/{id}")
-	public ModelAndView showDeleteRegister() {
-		ModelAndView mv = new ModelAndView("/delete_book_templates/delete_book");
+	public String showDeleteRegister(@PathVariable(required = true, name = "id") Integer id, RedirectAttributes attribute) {
 
-		// get from the database
-
-		return mv;
+		if(id != null) {
+			bookService.deleteBookById(id);
+			attribute.addFlashAttribute("deleted", true);
+		}
+		return "redirect:/book/listBooks";
 	}
 
 	private void addFillForLanguageField(Book book, ModelAndView mv) {
