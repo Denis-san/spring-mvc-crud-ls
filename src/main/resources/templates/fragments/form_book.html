@@ -19,8 +19,8 @@
 		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 	</div>
 
-	<form action="" method="post" th:action="@{/book/register}" th:object="${book}"
-		onsubmit="return submitForm(this)" enctype="multipart/form-data">
+	<form action="" method="post" th:action="@{/book/register}" th:object="${book}" onsubmit="return submitForm(this)"
+		enctype="multipart/form-data">
 		<div class="row align-items-md-stretch g-5">
 
 			<div class="col-md-4">
@@ -76,7 +76,6 @@
 
 								</div>
 
-
 								<div class="col-md-5" th:if="${newLang == null || newLang != true}">
 
 									<label for="inputLanguage" class="form-label">Idioma:</label>
@@ -98,9 +97,9 @@
 									</div>
 									<div class="invalid-feedback" th:errors="*{language.id}">
 									</div>
-	
+
 								</div>
-								
+
 								<input type="hidden" th:field="*{id}">
 
 								<div class="col-md-5">
@@ -173,8 +172,6 @@
 									<div th:if="*{authors[__${rowStat.index}__].id} != null">
 
 										<input type="hidden" th:field="*{authors[__${rowStat.index}__].id}">
-										<input type="hidden" th:field="*{authors[__${rowStat.index}__].nationality}">
-										<input type="hidden" th:field="*{authors[__${rowStat.index}__].biography}">
 
 										<div class="alert bg-primary border-0 py-2 rounded-pill text-white alert-dismissible fade show"
 											role="alert">
@@ -196,8 +193,9 @@
 									<div class="col-md-6" th:if="*{authors[__${rowStat.index}__].id} == null">
 										<label for="inputNameAuthor" class="form-label">Nome do autor:</label>
 										<input type="text" class="form-control rounded-pill" id="inputNameAuthor"
-											th:field="*{authors[__${rowStat.index}__].name}" th:errorclass="is-invalid">
-										<div class="invalid-feedback" th:errors="*{authors[__${rowStat.index}__].name}">
+											th:field="*{authors[__${rowStat.index}__].name}"
+											th:classappend="${authorNameError} ? is-invalid">
+										<div class="invalid-feedback" th:text="${authorNameError}">
 										</div>
 
 									</div>
@@ -206,9 +204,8 @@
 										<label for="inputNationality" class="form-label">Nacionalidade:</label>
 										<input type="text" class="form-control rounded-pill"
 											th:field="*{authors[__${rowStat.index}__].nationality}"
-											th:errorclass="is-invalid" id="inputNationality">
-										<div class="invalid-feedback"
-											th:errors="*{authors[__${rowStat.index}__].nationality}">
+											th:classappend="${authorNationError} ? is-invalid" id="inputNationality">
+										<div class="invalid-feedback" th:text="${authorNationError}">
 										</div>
 									</div>
 

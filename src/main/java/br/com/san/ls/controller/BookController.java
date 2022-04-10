@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -126,6 +127,24 @@ public class BookController {
 
 		List<Language> listAllLanguages = langService.getAllLanguages();
 
+		for (Author author : book.getAuthors()) {
+			if (author.getId() != null) {
+				int index = book.getAuthors().indexOf(author);
+				book.getAuthors().set(index, authorService.getAuthorById(author.getId()));
+			} else {
+				if (author.getName().isBlank()) {
+					ObjectError authorNameError = new ObjectError("authorNameError", "Não deve estar em branco");
+					bdResult.addError(authorNameError);
+					mv.addObject("authorNameError", authorNameError.getDefaultMessage());
+				}
+				if (author.getNationality().isBlank()) {
+					ObjectError authorNationError = new ObjectError("authorNationError", "Não deve estar em branco");
+					bdResult.addError(authorNationError);
+					mv.addObject("authorNationError", authorNationError.getDefaultMessage());
+				}
+			}
+		}
+
 		if (book.getLanguage().getLanguage() == null && book.getLanguage().getId() == null) {
 			bdResult.addError(new FieldError("errorLang", "language.id", "Não deve ser nulo!"));
 		}
@@ -203,9 +222,10 @@ public class BookController {
 	}
 
 	@GetMapping("/delete/{id}")
-	public String showDeleteRegister(@PathVariable(required = true, name = "id") Integer id, RedirectAttributes attribute) {
+	public String showDeleteRegister(@PathVariable(required = true, name = "id") Integer id,
+			RedirectAttributes attribute) {
 
-		if(id != null) {
+		if (id != null) {
 			bookService.deleteBookById(id);
 			attribute.addFlashAttribute("deleted", true);
 		}

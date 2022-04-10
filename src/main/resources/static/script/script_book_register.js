@@ -25,3 +25,24 @@ function submitForm() {
 		}
 	}
 }
+
+
+function showHiddenInputAuthor() {
+	let fields = document.getElementsByClassName("inputHiddenAuthor");
+
+	document.getElementById("divAuthorList").style.display = "none";
+
+	for (let i = 0; i < fields.length; i++) {
+		fields[i].type = "text";
+	}
+
+
+}
+
+
+
+
+
+
+
+

@@ -13,12 +13,10 @@ public class BookServiceImpl implements BookService {
 
 	@Autowired
 	private BookDao bookDao;
-	
+
 	@Override
 	public void saveNewBook(Book book) {
-		
-		bookDao.saveBook(book);
-
+		book.getAuthors().stream().forEach(e -> System.out.println(e));
 	}
 
 	@Override
@@ -31,7 +29,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public Book getBookById(Integer id) {
-		return bookDao.findBookById(id); 
+		return bookDao.findBookById(id);
 	}
 
 	@Override

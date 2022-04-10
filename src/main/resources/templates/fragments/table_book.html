@@ -66,6 +66,7 @@
 									</a>
 
 									<a class="btn btn-outline-danger" href="/book/listBooks/book/"
+										onclick="return confirm('Deseja realmente DELETAR livro?')"
 										th:href="@{'/book/delete/' + ${book.id}}">
 										<i class="bi bi-trash"></i>
 									</a>

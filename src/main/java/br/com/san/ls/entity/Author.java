@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,8 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "author_tb")
@@ -28,11 +25,7 @@ public class Author implements Serializable {
 	private Integer id;
 	@Column(length = 500)
 	private String biography;
-	@NotNull
-	@NotBlank
 	private String nationality;
-	@NotNull
-	@NotBlank
 	private String name;
 
 	@ManyToMany(mappedBy = "authors", fetch = FetchType.LAZY)
