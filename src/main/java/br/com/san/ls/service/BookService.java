@@ -16,4 +16,5 @@ public interface BookService {
 
 	public void deleteBookById(Integer id);
 	
+	public Long getQuantityOfBookRecords();
 }

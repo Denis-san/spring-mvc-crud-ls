@@ -127,20 +127,25 @@ public class BookController {
 
 		List<Language> listAllLanguages = langService.getAllLanguages();
 
-		for (Author author : book.getAuthors()) {
-			if (author.getId() != null) {
-				int index = book.getAuthors().indexOf(author);
-				book.getAuthors().set(index, authorService.getAuthorById(author.getId()));
-			} else {
-				if (author.getName().isBlank()) {
-					ObjectError authorNameError = new ObjectError("authorNameError", "Não deve estar em branco");
-					bdResult.addError(authorNameError);
-					mv.addObject("authorNameError", authorNameError.getDefaultMessage());
-				}
-				if (author.getNationality().isBlank()) {
-					ObjectError authorNationError = new ObjectError("authorNationError", "Não deve estar em branco");
-					bdResult.addError(authorNationError);
-					mv.addObject("authorNationError", authorNationError.getDefaultMessage());
+		if (book.getAuthors().isEmpty()) {
+			bdResult.addError(new FieldError("errorListAuthor", "book.authors", "Não deve estar vazio!"));
+		} else {
+			for (Author author : book.getAuthors()) {
+				if (author.getId() != null) {
+					int index = book.getAuthors().indexOf(author);
+					book.getAuthors().set(index, authorService.getAuthorById(author.getId()));
+				} else {	
+					if (author.getName().isBlank()) {
+						ObjectError authorNameError = new ObjectError("authorNameError", "Não deve estar em branco");
+						bdResult.addError(authorNameError);
+						mv.addObject("authorNameError", authorNameError.getDefaultMessage());
+					}
+					if (author.getNationality().isBlank()) {
+						ObjectError authorNationError = new ObjectError("authorNationError",
+								"Não deve estar em branco");
+						bdResult.addError(authorNationError);
+						mv.addObject("authorNationError", authorNationError.getDefaultMessage());
+					}
 				}
 			}
 		}

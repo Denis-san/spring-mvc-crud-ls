@@ -20,8 +20,10 @@ import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.ISBN;
+import org.hibernate.validator.constraints.Length;
 
 import br.com.san.ls.validation.Year;
 
@@ -42,6 +44,7 @@ public class Book implements Serializable {
 	private String isbn;
 	private String edition;
 
+	@Length(max = 500)
 	@Column(length = 500)
 	private String description;
 	@Column(name = "path_cloak")
@@ -49,6 +52,7 @@ public class Book implements Serializable {
 
 	@Year
 	private Integer year;
+	@NotBlank
 	@Column(name = "publish_company")
 	private String publishCompany;
 
@@ -58,10 +62,12 @@ public class Book implements Serializable {
 	private Language language;
 
 	@Min(1)
+	@NotNull
 	@Column(name = "number_pages")
 	private Integer numberPages;
 
 	@Min(1)
+	@NotNull
 	@Column(name = "inventory_quantity")
 	private Integer inventoryQuantity;
 
@@ -69,7 +75,6 @@ public class Book implements Serializable {
 	@Column(name = "shelf_code")
 	private String shelfCode;
 
-	@Valid
 	@ManyToMany(cascade = { CascadeType.MERGE }, fetch = FetchType.LAZY)
 	@JoinTable(name = "book_author", joinColumns = { @JoinColumn(name = "book_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "author_id") })

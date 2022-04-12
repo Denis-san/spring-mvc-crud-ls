@@ -16,4 +16,6 @@ public interface BookDao {
 
 	public void deleteById(Integer id);
 	
+	public Long quantityOfBookRecords();
+	
 }

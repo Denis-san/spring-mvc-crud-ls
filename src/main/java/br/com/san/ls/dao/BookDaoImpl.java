@@ -69,4 +69,11 @@ public class BookDaoImpl implements BookDao {
 
 	}
 
+	@Override
+	public Long quantityOfBookRecords() {
+		TypedQuery<Long> query = entityManager.createQuery("SELECT COUNT(b.id) FROM Book b", Long.class);
+		Long result = query.getSingleResult();
+		return result;
+	}
+
 }

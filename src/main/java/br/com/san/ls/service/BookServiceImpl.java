@@ -16,7 +16,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public void saveNewBook(Book book) {
-		book.getAuthors().stream().forEach(e -> System.out.println(e));
+		bookDao.saveBook(book);
 	}
 
 	@Override
@@ -41,6 +41,12 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void deleteBookById(Integer id) {
 		bookDao.deleteById(id);
+	}
+
+	@Override
+	public Long getQuantityOfBookRecords() {
+		Long result = bookDao.quantityOfBookRecords();
+		return result;
 	}
 
 }
